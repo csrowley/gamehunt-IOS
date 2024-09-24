@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79105BDE2CA12FE000EC6155 /* PixelifySans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79105BDA2CA12FE000EC6155 /* PixelifySans-Bold.ttf */; };
+		79105BDF2CA12FE000EC6155 /* PixelifySans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79105BDB2CA12FE000EC6155 /* PixelifySans-Medium.ttf */; };
+		79105BE02CA12FE000EC6155 /* PixelifySans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79105BDC2CA12FE000EC6155 /* PixelifySans-Regular.ttf */; };
+		79105BE12CA12FE000EC6155 /* PixelifySans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79105BDD2CA12FE000EC6155 /* PixelifySans-SemiBold.ttf */; };
+		79105BE42CA1320700EC6155 /* Jersey10-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79105BE32CA1320700EC6155 /* Jersey10-Regular.ttf */; };
 		799AB3792C980D2600026580 /* gameknowledgeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AB3782C980D2600026580 /* gameknowledgeApp.swift */; };
 		799AB37B2C980D2600026580 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AB37A2C980D2600026580 /* ContentView.swift */; };
 		799AB37D2C980D2600026580 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AB37C2C980D2600026580 /* Item.swift */; };
@@ -15,6 +20,9 @@
 		799AB38C2C980D2700026580 /* gameknowledgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AB38B2C980D2700026580 /* gameknowledgeTests.swift */; };
 		799AB3962C980D2700026580 /* gameknowledgeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AB3952C980D2700026580 /* gameknowledgeUITests.swift */; };
 		799AB3982C980D2700026580 /* gameknowledgeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AB3972C980D2700026580 /* gameknowledgeUITestsLaunchTests.swift */; };
+		79C8274A2CA138750002541D /* ModeSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C827492CA138750002541D /* ModeSelectButton.swift */; };
+		79C8274E2CA13E1F0002541D /* ClassicModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C8274D2CA13E1F0002541D /* ClassicModeView.swift */; };
+		79C827522CA2565A0002541D /* GuessingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C827512CA2565A0002541D /* GuessingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		79105BDA2CA12FE000EC6155 /* PixelifySans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans-Bold.ttf"; sourceTree = "<group>"; };
+		79105BDB2CA12FE000EC6155 /* PixelifySans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans-Medium.ttf"; sourceTree = "<group>"; };
+		79105BDC2CA12FE000EC6155 /* PixelifySans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans-Regular.ttf"; sourceTree = "<group>"; };
+		79105BDD2CA12FE000EC6155 /* PixelifySans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans-SemiBold.ttf"; sourceTree = "<group>"; };
+		79105BE22CA130B800EC6155 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		79105BE32CA1320700EC6155 /* Jersey10-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jersey10-Regular.ttf"; sourceTree = "<group>"; };
 		799AB3752C980D2600026580 /* gameknowledge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gameknowledge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		799AB3782C980D2600026580 /* gameknowledgeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gameknowledgeApp.swift; sourceTree = "<group>"; };
 		799AB37A2C980D2600026580 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -46,6 +60,9 @@
 		799AB3912C980D2700026580 /* gameknowledgeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gameknowledgeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		799AB3952C980D2700026580 /* gameknowledgeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gameknowledgeUITests.swift; sourceTree = "<group>"; };
 		799AB3972C980D2700026580 /* gameknowledgeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gameknowledgeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		79C827492CA138750002541D /* ModeSelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSelectButton.swift; sourceTree = "<group>"; };
+		79C8274D2CA13E1F0002541D /* ClassicModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicModeView.swift; sourceTree = "<group>"; };
+		79C827512CA2565A0002541D /* GuessingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +90,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		79105BD92CA12F0B00EC6155 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				79105BE32CA1320700EC6155 /* Jersey10-Regular.ttf */,
+				79105BDA2CA12FE000EC6155 /* PixelifySans-Bold.ttf */,
+				79105BDB2CA12FE000EC6155 /* PixelifySans-Medium.ttf */,
+				79105BDC2CA12FE000EC6155 /* PixelifySans-Regular.ttf */,
+				79105BDD2CA12FE000EC6155 /* PixelifySans-SemiBold.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		799AB36C2C980D2600026580 = {
 			isa = PBXGroup;
 			children = (
@@ -96,8 +125,10 @@
 		799AB3772C980D2600026580 /* gameknowledge */ = {
 			isa = PBXGroup;
 			children = (
+				79C827452CA138230002541D /* Views */,
+				79105BE22CA130B800EC6155 /* Info.plist */,
+				79105BD92CA12F0B00EC6155 /* fonts */,
 				799AB3782C980D2600026580 /* gameknowledgeApp.swift */,
-				799AB37A2C980D2600026580 /* ContentView.swift */,
 				799AB37C2C980D2600026580 /* Item.swift */,
 				799AB37E2C980D2700026580 /* Assets.xcassets */,
 				799AB3802C980D2700026580 /* Preview Content */,
@@ -128,6 +159,25 @@
 				799AB3972C980D2700026580 /* gameknowledgeUITestsLaunchTests.swift */,
 			);
 			path = gameknowledgeUITests;
+			sourceTree = "<group>";
+		};
+		79C827452CA138230002541D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				79C827462CA138330002541D /* UIShapes */,
+				799AB37A2C980D2600026580 /* ContentView.swift */,
+				79C827512CA2565A0002541D /* GuessingView.swift */,
+				79C8274D2CA13E1F0002541D /* ClassicModeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		79C827462CA138330002541D /* UIShapes */ = {
+			isa = PBXGroup;
+			children = (
+				79C827492CA138750002541D /* ModeSelectButton.swift */,
+			);
+			path = UIShapes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,6 +284,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79105BE42CA1320700EC6155 /* Jersey10-Regular.ttf in Resources */,
+				79105BDE2CA12FE000EC6155 /* PixelifySans-Bold.ttf in Resources */,
+				79105BDF2CA12FE000EC6155 /* PixelifySans-Medium.ttf in Resources */,
+				79105BE02CA12FE000EC6155 /* PixelifySans-Regular.ttf in Resources */,
+				79105BE12CA12FE000EC6155 /* PixelifySans-SemiBold.ttf in Resources */,
 				799AB3822C980D2700026580 /* Preview Assets.xcassets in Resources */,
 				799AB37F2C980D2700026580 /* Assets.xcassets in Resources */,
 			);
@@ -262,7 +317,10 @@
 			files = (
 				799AB37B2C980D2600026580 /* ContentView.swift in Sources */,
 				799AB37D2C980D2600026580 /* Item.swift in Sources */,
+				79C8274A2CA138750002541D /* ModeSelectButton.swift in Sources */,
+				79C827522CA2565A0002541D /* GuessingView.swift in Sources */,
 				799AB3792C980D2600026580 /* gameknowledgeApp.swift in Sources */,
+				79C8274E2CA13E1F0002541D /* ClassicModeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +486,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"gameknowledge/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = gameknowledge/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -456,6 +515,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"gameknowledge/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = gameknowledge/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
