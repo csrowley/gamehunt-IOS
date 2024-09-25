@@ -3,35 +3,36 @@ import SwiftData
 
 struct ContentView: View {
     let darkGrey = UIColor(red: (59/225), green: (54/225), blue: (54/225), alpha: 1)
-    
+    @State var showDailyView = false
+    @State var showMarathonView = false
+    @State var showSpecialModeView = false // change name in future corresponding to new mode
     
     init() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
-        
         appearance.shadowColor = .clear
-        
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 
     var body: some View {
         NavigationStack {
-            ZStack{
+            ZStack {
                 Color(darkGrey)
                     .ignoresSafeArea()
-                VStack{
+                VStack {
                     Image(.amachine)
                     VStack {
-                        ModeSelectButton(usrPrompt: "Daily Guess")
-                            .padding(10)
-                        ModeSelectButton(usrPrompt: "Marathon")
-                            .padding(10)
-
-                        ModeSelectButton(usrPrompt: "Special Mode")
-                            .padding(10)
-
+                        NavigationLink(destination: GuessingView(), isActive: $showDailyView) {
+                            EmptyView()
+                        }
+                        ModeSelectButton(usrPrompt: "Daily Guess", toggleView: $showDailyView)
+                            .padding(.bottom, 10)
                         
+                        // ModeSelectButton(usrPrompt: "Marathon")
+                        //     .padding(.bottom, 10)
+                        // ModeSelectButton(usrPrompt: "Special Mode")
+                        //     .padding(.bottom, 10)
                     }
                     .padding(100)
                 }

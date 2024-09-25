@@ -24,10 +24,10 @@ struct GuessingView: View {
                 VStack{
                     //Placeholder image: will be game cover, etc
                     
-                    Image(.amachine)
+                    Image(._400K)
                         .resizable()
-                        .frame(width: 200, height:200)
-                        .blur(radius: 5) // blur amount change by 5 each guess ?
+                        .frame(width: 350, height:350)
+                        .blur(radius: 10) // blur amount change by 5 each guess ?
                     Spacer()
                 }
                 Spacer()
@@ -39,3 +39,4 @@ struct GuessingView: View {
 #Preview {
     GuessingView()
 }
+	
