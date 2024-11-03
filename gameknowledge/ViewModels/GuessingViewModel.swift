@@ -22,11 +22,12 @@ extension GuessingView{
         var toggleSheetView = false
         var isWinner = false
         var todaysCoverURL = "https://images.igdb.com/igdb/image/upload/t_cover_big/co85h5.jpg"
-        
+                
         let supabase = SupabaseClient(
           supabaseURL: URL(string: "https://eholmptawlihmlaxkmzx.supabase.co")!,
-          supabaseKey: ""
-        ) // put in .xcconfig
+          supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVob2xtcHRhd2xpaG1sYXhrbXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc4NDY0MDYsImV4cCI6MjA0MzQyMjQwNn0.fwUm8KyS4IVWhBlnFWBPKd37kCEtqLXlZZCBe8lRM6M"
+          // public key (read - only)
+        )
         
 //        var filteredNames: [String] {
 //            if searchText.isEmpty {
@@ -96,7 +97,6 @@ extension GuessingView{
                 print("Error with fetching game info")
                 return nil
             }
-            print(gameInfo)
             return gameInfo
         }
         
