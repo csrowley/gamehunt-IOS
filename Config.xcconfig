@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  gameknowledge
+//
+//  Created by Chris Rowley on 11/1/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVob2xtcHRhd2xpaG1sYXhrbXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc4NDY0MDYsImV4cCI6MjA0MzQyMjQwNn0.fwUm8KyS4IVWhBlnFWBPKd37kCEtqLXlZZCBe8lRM6M"

@@ -1,0 +1,14 @@
+# Ignore JSON files
+*.json
+
+# Ignore JPG files
+*.jpg
+
+# Ignore PNG files
+*.png
+
+# Ignore Xcode related files and folders
+*.xcuserdata/
+*.xcworkspace/
+DerivedData/
+*.hmap

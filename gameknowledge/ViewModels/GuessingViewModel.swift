@@ -29,14 +29,6 @@ extension GuessingView{
           // public key (read - only)
         )
         
-//        var filteredNames: [String] {
-//            if searchText.isEmpty {
-//                return []
-//            } else {
-//                return testNames.filter { $0.lowercased().contains(searchText.lowercased()) }
-//            }
-//        }
-        
         
 //        func getTodaysGameInfo() -> GameInfo{
 //            
@@ -72,7 +64,6 @@ extension GuessingView{
                 return ""
             }
             
-            print(resURL)
             return resURL
             
 
@@ -99,6 +90,83 @@ extension GuessingView{
             }
             return gameInfo
         }
+        
+        func importAllIds() -> [Int]? {
+            guard let pathName = Bundle.main.url(forResource: "ids", withExtension: "json") else{
+                print("Path Not Found for 'ids.json'")
+                return nil
+            }
+            
+            do{
+                let data = try Data(contentsOf: pathName)
+                let ids = try JSONDecoder().decode([Int].self, from: data)
+                return ids
+            } catch {
+                print("Error returning ids")
+                return nil
+            }
+        }
+        
+        
+        func loadNames() -> [String]? {
+            guard let pathName = Bundle.main.url(forResource: "names", withExtension: "json") else{
+                print("Path Not Found for 'names.json'")
+                return nil
+            }
+            
+            do{
+                let data = try Data(contentsOf: pathName)
+                let names = try JSONDecoder().decode([String].self, from: data)
+                return names
+            } catch {
+                print("Error returning names")
+                return nil
+            }
+            
+        }
+        
+        
+        func getRandomID(_ allIds: [Int]) -> Int?{
+            if let randomID = allIds.randomElement(){
+                return randomID
+            }
+            else{
+                print("Error returning random ID")
+                return nil
+            }
+        }
+        
+        
+        func checkForRefresh(_ lastLoginDateString: String) -> Bool {
+            let currentDate = Date()
+            
+            // Check for an empty string
+            guard !lastLoginDateString.isEmpty else {
+                print("Last login date string is empty.")
+                return true // Treat as a refresh needed
+            }
+            
+            // Create a DateFormatter to parse the input string
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd" // Adjust the format according to your date string
+            
+            // Convert the string to Date
+            guard let lastLoginDate = dateFormatter.date(from: lastLoginDateString) else {
+                print("Failed to convert string to date: \(lastLoginDateString)")
+                return true // Treat as a refresh needed
+            }
+            
+            // Check if the last login date is not the same as the current date
+            if !Calendar.current.isDate(lastLoginDate, inSameDayAs: currentDate) {
+                return true // A new day has started
+            }
+            
+            return false // Same day
+        }
+
+
+        
+        
         
     }
 }

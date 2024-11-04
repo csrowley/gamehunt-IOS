@@ -4,19 +4,23 @@ import SwiftData
 struct SearchView: View {
     @State private var viewModel = ViewModel()
     @Environment(\.modelContext) var modelContext
-    @AppStorage("firstLaunch") private var isFirstLaunch: Bool = true
     @Query var searchNames: [SearchTerms]
     
     @State private var searchText = ""
     @Binding var selectedText: String
-
     @State private var items: [String] = []
+    
+    // Computed property for filtered names based on searchText
+    private var filteredNames: [String] {
+        searchText.isEmpty ? items : items.filter { $0.lowercased().contains(searchText.lowercased()) }
+    }
     
     var body: some View {
         NavigationView {
             List {
                 Section {
-                    ForEach(searchText.isEmpty ? items : items.filter { $0.contains(searchText) }, id: \.self) { item in
+                    // Use filteredNames here
+                    ForEach(filteredNames, id: \.self) { item in
                         Button(action: {
                             selectedText = item
                         }) {
@@ -28,19 +32,15 @@ struct SearchView: View {
             .searchable(text: $searchText)
         }
         .onAppear {
-            if isFirstLaunch {
-                if let populateNames = viewModel.loadNames() {
-                    items = populateNames
-                    
-                    let insertNames = SearchTerms(names: populateNames)
-                    modelContext.insert(insertNames)
-                }
-            } else {
-                // Update items from searchNames if available
-                if let names = searchNames.first?.names {
-                    items = names
-                }
+            // Update items from searchNames if available
+            if let names = searchNames.first?.names {
+                items = names
             }
+            else{
+                print("no names")
+                print(searchNames)
+            }
+            
         }
     }
 }

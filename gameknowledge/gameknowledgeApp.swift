@@ -13,7 +13,8 @@ struct gameknowledgeApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
-            SearchTerms.self
+            SearchTerms.self,
+            GameIds.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

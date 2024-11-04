@@ -40,10 +40,20 @@ extension SearchView{
 
 @Model
 class SearchTerms {
+    
     var names: [String]
     
     init(names: [String]) {
         self.names = names
+    }
+}
+
+@Model
+class GameIds{
+    var ids: [Int]
+    
+    init(ids: [Int]) {
+        self.ids = ids
     }
 }
 	

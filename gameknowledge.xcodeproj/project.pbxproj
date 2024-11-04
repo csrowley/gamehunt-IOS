@@ -65,6 +65,7 @@
 		79105BDD2CA12FE000EC6155 /* PixelifySans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans-SemiBold.ttf"; sourceTree = "<group>"; };
 		79105BE22CA130B800EC6155 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		79105BE32CA1320700EC6155 /* Jersey10-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jersey10-Regular.ttf"; sourceTree = "<group>"; };
+		794F055D2CD74E37000BD603 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		797798C72CD5F64E004A0872 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		797798C82CD7352F004A0872 /* ids.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ids.json; sourceTree = "<group>"; };
 		797798C92CD7352F004A0872 /* names.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = names.json; sourceTree = "<group>"; };
@@ -138,8 +139,6 @@
 		7925E38D2CAD01FE005DFFCA /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				797798C82CD7352F004A0872 /* ids.json */,
-				797798C92CD7352F004A0872 /* names.json */,
 				79DAC4A72CB503E00025E2A5 /* SearchData.swift */,
 			);
 			path = Data;
@@ -155,6 +154,7 @@
 		799AB36C2C980D2600026580 = {
 			isa = PBXGroup;
 			children = (
+				794F055D2CD74E37000BD603 /* .gitignore */,
 				797798C72CD5F64E004A0872 /* Config.xcconfig */,
 				799AB3772C980D2600026580 /* gameknowledge */,
 				799AB38A2C980D2700026580 /* gameknowledgeTests */,
@@ -218,6 +218,8 @@
 		79BBB1EC2CD5B9140004F635 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				797798C92CD7352F004A0872 /* names.json */,
+				797798C82CD7352F004A0872 /* ids.json */,
 				79BBB1ED2CD5B91B0004F635 /* GuessingViewModel.swift */,
 			);
 			path = ViewModels;
