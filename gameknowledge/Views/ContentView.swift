@@ -6,6 +6,7 @@ struct ContentView: View {
     @State var showDailyView = false
     @State var showMarathonView = false
     @State var showSpecialModeView = false // change name in future corresponding to new mode
+    @State var showInfiniteView = false
     
     init() {
         let appearance = UINavigationBarAppearance()
@@ -27,6 +28,12 @@ struct ContentView: View {
                             EmptyView()
                         }
                         ModeSelectButton(usrPrompt: "Daily Guess", toggleView: $showDailyView)
+                            .padding(.bottom, 50)
+                        
+                        NavigationLink(destination: InfiniteView(), isActive: $showInfiniteView) {
+                            EmptyView()
+                        }
+                        ModeSelectButton(usrPrompt: "Infinite Mode", toggleView: $showInfiniteView)
                             .padding(.bottom, 10)
                         
                         // ModeSelectButton(usrPrompt: "Marathon")

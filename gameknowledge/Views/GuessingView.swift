@@ -1,13 +1,5 @@
 import SwiftUI
 import SwiftData
-/// import all ids to get a random id for picking games (done)
-/// create persistance for each modes guesses and blur effect
-/// implement id picking and grab coverart url, and set the correct guess when picked (done)
-/// implemet when won, if daily new guess wont show until 12am, if infinite new guess shows when clicking continue or clicking off the alert
-/// implement a score on infinite mode
-///
-
-
 
 struct GuessingView: View {
     let darkGrey = UIColor(red: (59/225), green: (54/225), blue: (54/225), alpha: 1)
@@ -22,12 +14,16 @@ struct GuessingView: View {
     
     @AppStorage("firstLaunch") private var isFirstLaunch: Bool = true
     @AppStorage("dailyGuess") private var dailyGuess: String = "Buckshot Roulette"
+    
     @AppStorage("dailyGuessID") private var dailyGuessID: Int = 1
     @AppStorage("dailyGuessCoverURL") private var dailyGuessCoverURL: String = "https://images.igdb.com/igdb/image/upload/t_cover_big/co85h5.jpg"
+    
     @AppStorage("dailyGuessFranchise") private var dailyGuessFranchise: String = "None"
     @AppStorage("lastLoginDate") private var lastLoginDate: String = ""
     
     @AppStorage("dailyLives") private var numLivesLeft: Int = 5
+    @AppStorage("userGuessesDaily") private var dailyUserGuess: Data?
+    @AppStorage("isWinner") private var isWinner: Bool = false
     
     init() {
         UISearchBar.appearance().overrideUserInterfaceStyle = .dark
@@ -50,22 +46,26 @@ struct GuessingView: View {
                             .resizable()
                             .frame(width: 250, height: 250)
                             .blur(radius: CGFloat(blurCount))
+                            .cornerRadius(10)
                     } placeholder: {
                         ProgressView()
                     }
                     
                     HStack {
-                        ForEach(0..<viewModel.numLives, id: \.self) { idx in
-                            Image(.heart)
+                        if numLivesLeft > 0{
+                            ForEach(0..<numLivesLeft, id: \.self) { idx in
+                                Image(.heart)
+                            }
+                        }
+                        else{
+                            Text("Game Over")
+                                .font(Font.custom("Jersey10-Regular", size: 30))
+                                .foregroundColor(.red)
                         }
                     }
                     .padding(.bottom, 5)
                                         
-                    if showGameOverAlert {
-                        Text("Game Over")
-                            .font(Font.custom("Jersey10-Regular", size: 30))
-                            .foregroundColor(.red)
-                    } else if viewModel.isWinner {
+                    if isWinner {
                         Text("Winner")
                             .font(Font.custom("Jersey10-Regular", size: 30))
                             .foregroundColor(.green)
@@ -79,34 +79,25 @@ struct GuessingView: View {
                             Button {
                                 viewModel.submitFlag.toggle()
                                 
-                                if !viewModel.isWinner && !viewModel.unqiueGuesses.contains(viewModel.searchText) && !viewModel.searchText.isEmpty {
+                                if numLivesLeft > 0 && !viewModel.isWinner && !viewModel.unqiueGuesses.contains(viewModel.searchText) && !viewModel.searchText.isEmpty {
                                     if viewModel.searchText == dailyGuess {
                                         // Show winner screen
-                                        viewModel.isWinner.toggle()
+                                        isWinner.toggle()
                                         blurCount = 0
                                     } else {
                                         // Decrease lives and check for game over
-                                        if viewModel.numLives - 1 < 0 {
-                                            showGameOverAlert = true // Set alert to show
-                                            blurCount = 12
-                                        } else {
+                                        if numLivesLeft > 1 {
                                             viewModel.numLives -= 1
                                             numLivesLeft -= 1
-                                            
-                                            if viewModel.numLives == 0{
-                                                showGameOverAlert = true
-                                                blurCount = 12
-                                                viewModel.unqiueGuesses.insert(viewModel.searchText)
-                                                viewModel.userGuessed.append(viewModel.searchText)
-                                            }
+                                            viewModel.unqiueGuesses.insert(viewModel.searchText)
+                                            viewModel.userGuessed.append(viewModel.searchText)
+                                            saveGuesses(false)
+                                            blurCount = max(2, blurCount - 2)
+                                        } else {
+                                            numLivesLeft = 0
+                                            blurCount = 12
+                                            showGameOverAlert = true // Trigger the game-over alert
                                         }
-                                        
-                                        blurCount = max(2, blurCount - 2)
-                                    }
-                                    
-                                    if viewModel.numLives > 0{
-                                        viewModel.unqiueGuesses.insert(viewModel.searchText)
-                                        viewModel.userGuessed.append(viewModel.searchText)
                                     }
                                 }
                             } label: {
@@ -170,6 +161,7 @@ struct GuessingView: View {
             }
         }
         .onAppear {
+            loadGuesses()
             let todaysDate = Date()
             let formatter = DateFormatter()
             
@@ -179,9 +171,8 @@ struct GuessingView: View {
             if isFirstLaunch {
 
                 lastLoginDate = lastLoginString
-                print(lastLoginDate)
                 
-                if let populateNames = viewModel.loadNames() {
+                if let populateNames = viewModel.gameHelper.loadNames() {
                     let insertNames = SearchTerms(names: populateNames)
                     modelContext.insert(insertNames)
                     do{
@@ -191,7 +182,7 @@ struct GuessingView: View {
                     }
                 }
                 
-                if let populateIds = viewModel.importAllIds(){
+                if let populateIds = viewModel.gameHelper.importAllIds(){
                     let insertIDS = GameIds(ids: populateIds)
                     modelContext.insert(insertIDS)
                     do{
@@ -199,12 +190,12 @@ struct GuessingView: View {
                     } catch {
                         print("Error Saving ids")
                     }
-                    let currGuessID = viewModel.getRandomID(insertIDS.ids)!
+                    let currGuessID = viewModel.gameHelper.getRandomID(insertIDS.ids)!
                     dailyGuessID = currGuessID
                                         
                     Task{
-                        let currGameInfo = try await viewModel.getGameInfo(currGuessID)
-                        let currGameCoverURL = try await viewModel.getCoverLink(currGuessID)
+                        let currGameInfo = try await viewModel.gameHelper.getGameInfo(currGuessID)
+                        let currGameCoverURL = try await viewModel.gameHelper.getCoverLink(currGuessID)
                         
                         dailyGuessCoverURL = currGameCoverURL
                         dailyGuess = currGameInfo!.name
@@ -219,23 +210,20 @@ struct GuessingView: View {
                 
                 isFirstLaunch = false
             }
-            else if viewModel.checkForRefresh(lastLoginDate){
-                
+            else if viewModel.gameHelper.checkForRefresh(lastLoginDate){
+                saveGuesses(true)
+                isWinner = false
+                numLivesLeft = 5
+                blurCount = 12
                 Task{
                     if let allIds = gameIds.first?.ids{
-                        let currGuessID = viewModel.getRandomID(allIds)
-                        let currGameInfo = try await viewModel.getGameInfo(currGuessID!)
-                        let currGameCoverURL = try await viewModel.getCoverLink(currGuessID!)
+                        let currGuessID = viewModel.gameHelper.getRandomID(allIds)
+                        let currGameInfo = try await viewModel.gameHelper.getGameInfo(currGuessID!)
+                        let currGameCoverURL = try await viewModel.gameHelper.getCoverLink(currGuessID!)
                         
                         dailyGuessCoverURL = currGameCoverURL
                         dailyGuess = currGameInfo!.name
                         dailyGuessID = currGuessID!
-                        
-//                        
-//                        print("First Guess \(dailyGuess)")
-//                        print("First Guess \(currGuessID)")
-//                        print("First Guess \(dailyGuessCoverURL)")
-
                     }
                     
                     lastLoginDate = lastLoginString
@@ -247,8 +235,24 @@ struct GuessingView: View {
             Alert(title: Text("Game Over"),
                   message: Text("You've run out of lives. Answer: \(dailyGuess)"),
                   dismissButton: .default(Text("OK")) {
-                      // Reset or any other action when the alert is dismissed
+                      // Actions to perform when the alert is dismissed (like resetting for a new game)
                   })
+        }
+    }
+    
+    private func saveGuesses(_ isNewLoad: Bool){
+        if isNewLoad{
+            dailyUserGuess = Data()
+        }
+        else if let data = try? JSONEncoder().encode(viewModel.userGuessed){
+            dailyUserGuess = data
+        }
+    }
+    
+    private func loadGuesses(){
+        if let data = dailyUserGuess,
+           let savedData = try? JSONDecoder().decode([String].self, from: data){
+            viewModel.userGuessed = savedData
         }
     }
 }
