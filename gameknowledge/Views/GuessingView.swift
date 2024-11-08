@@ -139,7 +139,7 @@ struct GuessingView: View {
                             HStack {
                                 Text(name)
                                     .font(Font.custom("Jersey10-Regular", size: 25))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.white)		
                                 Spacer()
                                 if name == dailyGuess {
                                     Text("Winner")

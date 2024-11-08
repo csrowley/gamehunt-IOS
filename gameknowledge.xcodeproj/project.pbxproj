@@ -12,6 +12,9 @@
 		79105BE02CA12FE000EC6155 /* PixelifySans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79105BDC2CA12FE000EC6155 /* PixelifySans-Regular.ttf */; };
 		79105BE12CA12FE000EC6155 /* PixelifySans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79105BDD2CA12FE000EC6155 /* PixelifySans-SemiBold.ttf */; };
 		79105BE42CA1320700EC6155 /* Jersey10-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79105BE32CA1320700EC6155 /* Jersey10-Regular.ttf */; };
+		7911DB2F2CDDFBB10035FE05 /* LocalDatabase+Migrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7911DB2E2CDDFBB10035FE05 /* LocalDatabase+Migrator.swift */; };
+		7911DB312CDE00D00035FE05 /* LocalDatabase+Persistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7911DB302CDE00D00035FE05 /* LocalDatabase+Persistent.swift */; };
+		7911DB332CDE01200035FE05 /* LocalDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7911DB322CDE01200035FE05 /* LocalDatabase.swift */; };
 		797798C42CD5CF73004A0872 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 797798C32CD5CF73004A0872 /* Supabase */; };
 		797798CA2CD7352F004A0872 /* names.json in Resources */ = {isa = PBXBuildFile; fileRef = 797798C92CD7352F004A0872 /* names.json */; };
 		797798CB2CD7352F004A0872 /* ids.json in Resources */ = {isa = PBXBuildFile; fileRef = 797798C82CD7352F004A0872 /* ids.json */; };
@@ -38,6 +41,8 @@
 		79BEF0972CDC378500E02A77 /* InfiniteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BEF0962CDC378500E02A77 /* InfiniteView.swift */; };
 		79BEF0992CDC383C00E02A77 /* InfiniteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BEF0982CDC383C00E02A77 /* InfiniteViewModel.swift */; };
 		79BEF09D2CDC39A500E02A77 /* GuessingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BEF09C2CDC39A500E02A77 /* GuessingHelpers.swift */; };
+		79BEF0A02CDDE53100E02A77 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 79BEF09F2CDDE53100E02A77 /* GRDB */; };
+		79BEF0A22CDDE53100E02A77 /* GRDB-dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 79BEF0A12CDDE53100E02A77 /* GRDB-dynamic */; };
 		79C8274A2CA138750002541D /* ModeSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C827492CA138750002541D /* ModeSelectButton.swift */; };
 		79C827522CA2565A0002541D /* GuessingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C827512CA2565A0002541D /* GuessingView.swift */; };
 		79DAC4A82CB503EC0025E2A5 /* SearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DAC4A72CB503E00025E2A5 /* SearchData.swift */; };
@@ -67,6 +72,9 @@
 		79105BDD2CA12FE000EC6155 /* PixelifySans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans-SemiBold.ttf"; sourceTree = "<group>"; };
 		79105BE22CA130B800EC6155 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		79105BE32CA1320700EC6155 /* Jersey10-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jersey10-Regular.ttf"; sourceTree = "<group>"; };
+		7911DB2E2CDDFBB10035FE05 /* LocalDatabase+Migrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalDatabase+Migrator.swift"; sourceTree = "<group>"; };
+		7911DB302CDE00D00035FE05 /* LocalDatabase+Persistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalDatabase+Persistent.swift"; sourceTree = "<group>"; };
+		7911DB322CDE01200035FE05 /* LocalDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDatabase.swift; sourceTree = "<group>"; };
 		794F055D2CD74E37000BD603 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		797798C72CD5F64E004A0872 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		797798C82CD7352F004A0872 /* ids.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ids.json; sourceTree = "<group>"; };
@@ -100,9 +108,11 @@
 				797798C42CD5CF73004A0872 /* Supabase in Frameworks */,
 				79BBB1F92CD5C8420004F635 /* Storage in Frameworks */,
 				79BBB1F52CD5C8420004F635 /* PostgREST in Frameworks */,
+				79BEF0A02CDDE53100E02A77 /* GRDB in Frameworks */,
 				79BBB2042CD5C91A0004F635 /* Storage in Frameworks */,
 				79BBB1FE2CD5C91A0004F635 /* Functions in Frameworks */,
 				79BBB2022CD5C91A0004F635 /* Realtime in Frameworks */,
+				79BEF0A22CDDE53100E02A77 /* GRDB-dynamic in Frameworks */,
 				79BBB2002CD5C91A0004F635 /* PostgREST in Frameworks */,
 				79BBB1F32CD5C8420004F635 /* Functions in Frameworks */,
 				79BBB1FC2CD5C91A0004F635 /* Auth in Frameworks */,
@@ -143,7 +153,10 @@
 		7925E38D2CAD01FE005DFFCA /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				7911DB322CDE01200035FE05 /* LocalDatabase.swift */,
 				79DAC4A72CB503E00025E2A5 /* SearchData.swift */,
+				7911DB2E2CDDFBB10035FE05 /* LocalDatabase+Migrator.swift */,
+				7911DB302CDE00D00035FE05 /* LocalDatabase+Persistent.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -341,6 +354,7 @@
 			mainGroup = 799AB36C2C980D2600026580;
 			packageReferences = (
 				79BBB1FA2CD5C91A0004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				79BEF09E2CDDE53100E02A77 /* XCRemoteSwiftPackageReference "GRDB" */,
 			);
 			productRefGroup = 799AB3762C980D2600026580 /* Products */;
 			projectDirPath = "";
@@ -392,7 +406,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				79BEF0992CDC383C00E02A77 /* InfiniteViewModel.swift in Sources */,
+				7911DB312CDE00D00035FE05 /* LocalDatabase+Persistent.swift in Sources */,
 				79BBB1EE2CD5B91F0004F635 /* GuessingViewModel.swift in Sources */,
+				7911DB332CDE01200035FE05 /* LocalDatabase.swift in Sources */,
+				7911DB2F2CDDFBB10035FE05 /* LocalDatabase+Migrator.swift in Sources */,
 				799AB37B2C980D2600026580 /* ContentView.swift in Sources */,
 				79BEF09D2CDC39A500E02A77 /* GuessingHelpers.swift in Sources */,
 				799AB37D2C980D2600026580 /* Item.swift in Sources */,
@@ -745,6 +762,14 @@
 				minimumVersion = 2.5.1;
 			};
 		};
+		79BEF09E2CDDE53100E02A77 /* XCRemoteSwiftPackageReference "GRDB" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -802,6 +827,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 79BBB1FA2CD5C91A0004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Storage;
+		};
+		79BEF09F2CDDE53100E02A77 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79BEF09E2CDDE53100E02A77 /* XCRemoteSwiftPackageReference "GRDB" */;
+			productName = GRDB;
+		};
+		79BEF0A12CDDE53100E02A77 /* GRDB-dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79BEF09E2CDDE53100E02A77 /* XCRemoteSwiftPackageReference "GRDB" */;
+			productName = "GRDB-dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
