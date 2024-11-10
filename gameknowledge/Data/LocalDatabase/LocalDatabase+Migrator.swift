@@ -38,7 +38,7 @@ extension LocalDatabase {
         try db.create(table: "cover"){ table in
             table.column("cover_id", .integer).primaryKey().notNull()
             table.column("cover_url", .text)
-            table.belongsTo("games", onDelete: .cascade)
+            table.belongsTo("game", onDelete: .cascade)
         }
         
         

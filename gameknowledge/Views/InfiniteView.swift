@@ -213,7 +213,7 @@ struct InfiniteView: View {
                                         .font(Font.custom("Jersey10-Regular", size: 25))
                                         .foregroundColor(.green)
                                 } else {
-                                    Text("Wrong saga")
+                                    Text("Wrong")
                                         .font(Font.custom("Jersey10-Regular", size: 25))
                                         .foregroundColor(.red)
                                 }
@@ -253,23 +253,55 @@ struct InfiniteView: View {
                     let currGuessID = viewModel.gameHelper.getRandomID(insertIDS.ids)!
                     infiniteGuessID = currGuessID
                                         
+//                    Task{
+//                        let currGameInfo = try await viewModel.gameHelper.getGameInfo(currGuessID)
+//                        let currGameCoverURL = try await viewModel.gameHelper.getCoverLink(currGuessID)
+//                        
+//                        infiniteGuessCoverURL = currGameCoverURL
+//                        infiniteGuess = currGameInfo!.name
+//                        
+//                        print(currGameInfo!.name)
+//                        print(currGameCoverURL)
+//                        
+//                    }
+                    
                     Task{
-                        let currGameInfo = try await viewModel.gameHelper.getGameInfo(currGuessID)
-                        let currGameCoverURL = try await viewModel.gameHelper.getCoverLink(currGuessID)
+                        await LocalDatabase.populateDatabase()
                         
-                        infiniteGuessCoverURL = currGameCoverURL
-                        infiniteGuess = currGameInfo!.name
+                        let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID))
+                        let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID))
                         
-                        print(currGameInfo!.name)
-                        print(currGameCoverURL)
+                        infiniteGuessCoverURL = currGameCoverURL?.cover_url ?? "none"
+                        infiniteGuess = currGameInfo?.name ?? "none"
+                        
+                        print(infiniteGuess)
+                        print(infiniteGuessCoverURL)
                         
                     }
+                    
+                    
                     
                     
                 }
                 
                 isFirstLaunch = false
             }
+//            else{
+//                let currGuessID = viewModel.gameHelper.getRandomID(insertIDS.ids)
+//                infiniteGuessID = currGuessID
+//                
+//                Task{
+//                    let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID))
+//                    let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID))
+//                    
+//                    infiniteGuessCoverURL = currGameCoverURL?.cover_url ?? ""
+//                    infiniteGuess = currGameInfo?.name ?? ""
+//                    
+//                    print(currGameInfo?.name ?? "")
+//                    print(currGameCoverURL?.cover_url ?? "")
+//                    
+//                }
+//            }
 
         }
         // Alert when the game is over
@@ -305,12 +337,12 @@ struct InfiniteView: View {
             // Ensure `getRandomID` returns an optional, as only it requires optional binding
             if let currGuessID = viewModel.gameHelper.getRandomID(allIds) {
                 // Since `getGameInfo` and `getCoverLink` return non-optional values, assign them directly
-                let currGameInfo = try await viewModel.gameHelper.getGameInfo(currGuessID)
-                let currGameCoverURL = try await viewModel.gameHelper.getCoverLink(currGuessID)
+                let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID))
+                let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID))
                 
                 // Assign values after async operations are complete
-                infiniteGuessCoverURL = currGameCoverURL
-                infiniteGuess = currGameInfo!.name
+                infiniteGuessCoverURL = currGameCoverURL?.cover_url ?? ""
+                infiniteGuess = currGameInfo?.name ?? "No Game Found"
                 infiniteGuessID = currGuessID
             } else {
                 print("Error: Unable to retrieve a random ID.")

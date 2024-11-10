@@ -194,14 +194,14 @@ struct GuessingView: View {
                     dailyGuessID = currGuessID
                                         
                     Task{
-                        let currGameInfo = try await viewModel.gameHelper.getGameInfo(currGuessID)
-                        let currGameCoverURL = try await viewModel.gameHelper.getCoverLink(currGuessID)
+                        let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID))
+                        let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID))
                         
-                        dailyGuessCoverURL = currGameCoverURL
-                        dailyGuess = currGameInfo!.name
+                        dailyGuessCoverURL = currGameCoverURL?.cover_url ?? ""
+                        dailyGuess = currGameInfo?.name ?? ""
                         
-                        print(currGameInfo!.name)
-                        print(currGameCoverURL)
+                        print(currGameInfo?.name ?? "no name")
+                        print(currGameCoverURL?.cover_url ?? "no url")
                         
                     }
                     
@@ -218,11 +218,11 @@ struct GuessingView: View {
                 Task{
                     if let allIds = gameIds.first?.ids{
                         let currGuessID = viewModel.gameHelper.getRandomID(allIds)
-                        let currGameInfo = try await viewModel.gameHelper.getGameInfo(currGuessID!)
-                        let currGameCoverURL = try await viewModel.gameHelper.getCoverLink(currGuessID!)
+                        let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID!))
+                        let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID!))
                         
-                        dailyGuessCoverURL = currGameCoverURL
-                        dailyGuess = currGameInfo!.name
+                        dailyGuessCoverURL = currGameCoverURL?.cover_url ?? ""
+                        dailyGuess = currGameInfo?.name ?? ""
                         dailyGuessID = currGuessID!
                     }
                     
