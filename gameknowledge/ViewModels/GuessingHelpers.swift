@@ -17,8 +17,8 @@ class GuessingHelpers {
 
     init() {
         supabase = SupabaseClient(
-            supabaseURL: URL(string: "https://eholmptawlihmlaxkmzx.supabase.co")!,
-            supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVob2xtcHRhd2xpaG1sYXhrbXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc4NDY0MDYsImV4cCI6MjA0MzQyMjQwNn0.fwUm8KyS4IVWhBlnFWBPKd37kCEtqLXlZZCBe8lRM6M" // public key (read-only)
+            supabaseURL: URL(string: "")!,
+            supabaseKey: "" // public key (read-only)
         )
     }
 
