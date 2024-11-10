@@ -79,7 +79,7 @@ struct GuessingView: View {
                             Button {
                                 viewModel.submitFlag.toggle()
                                 
-                                if numLivesLeft > 0 && !viewModel.isWinner && !viewModel.unqiueGuesses.contains(viewModel.searchText) && !viewModel.searchText.isEmpty {
+                                if numLivesLeft > 0 && !isWinner && !viewModel.unqiueGuesses.contains(viewModel.searchText) && !viewModel.searchText.isEmpty {
                                     if viewModel.searchText == dailyGuess {
                                         // Show winner screen
                                         isWinner.toggle()
@@ -194,6 +194,7 @@ struct GuessingView: View {
                     dailyGuessID = currGuessID
                                         
                     Task{
+                        await LocalDatabase.populateDatabase()
                         let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID))
                         let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID))
                         
@@ -213,6 +214,8 @@ struct GuessingView: View {
             else if viewModel.gameHelper.checkForRefresh(lastLoginDate){
                 saveGuesses(true)
                 isWinner = false
+                viewModel.userGuessed.removeAll()
+                viewModel.unqiueGuesses.removeAll()
                 numLivesLeft = 5
                 blurCount = 12
                 Task{

@@ -13,14 +13,14 @@ import Supabase
 
 class GuessingHelpers {
     // Supabase client for database interactions
-    private let supabase: SupabaseClient
-
-    init() {
-        supabase = SupabaseClient(
-            supabaseURL: URL(string: "")!,
-            supabaseKey: "" // public key (read-only)
-        )
-    }
+//    private let supabase: SupabaseClient
+//
+//    init() {
+//        supabase = SupabaseClient(
+//            supabaseURL: URL(string: "")!,
+//            supabaseKey: "" // public key (read-only)
+//        )
+//    }
 
     struct GameInfo: Codable {
         let name: String
@@ -34,38 +34,38 @@ class GuessingHelpers {
     }
 
     // Fetch cover URL based on cover ID
-    func getCoverLink(_ coverID: Int) async throws -> String {
-        let idToURL: [CoverURL] = try await supabase
-            .from("Covers")
-            .select("cover_url")
-            .eq("cover_id", value: coverID)
-            .limit(1)
-            .execute()
-            .value
-
-        guard let resURL = idToURL.first?.cover_url else {
-            print("Error with fetching URL")
-            return ""
-        }
-        return resURL
-    }
-
-    // Fetch game info based on game ID
-    func getGameInfo(_ id: Int) async throws -> GameInfo? {
-        let randomGame: [GameInfo] = try await supabase
-            .from("Games")
-            .select()
-            .eq("id", value: id)
-            .limit(1)
-            .execute()
-            .value
-
-        guard let gameInfo = randomGame.first else {
-            print("Error with fetching game info")
-            return nil
-        }
-        return gameInfo
-    }
+//    func getCoverLink(_ coverID: Int) async throws -> String {
+//        let idToURL: [CoverURL] = try await supabase
+//            .from("Covers")
+//            .select("cover_url")
+//            .eq("cover_id", value: coverID)
+//            .limit(1)
+//            .execute()
+//            .value
+//
+//        guard let resURL = idToURL.first?.cover_url else {
+//            print("Error with fetching URL")
+//            return ""
+//        }
+//        return resURL
+//    }
+//
+//    // Fetch game info based on game ID
+//    func getGameInfo(_ id: Int) async throws -> GameInfo? {
+//        let randomGame: [GameInfo] = try await supabase
+//            .from("Games")
+//            .select()
+//            .eq("id", value: id)
+//            .limit(1)
+//            .execute()
+//            .value
+//
+//        guard let gameInfo = randomGame.first else {
+//            print("Error with fetching game info")
+//            return nil
+//        }
+//        return gameInfo
+//    }
 
     // Load game IDs from JSON file
     func importAllIds() -> [Int]? {
@@ -94,7 +94,7 @@ class GuessingHelpers {
         do {
             let data = try Data(contentsOf: pathName)
             let names = try JSONDecoder().decode([String].self, from: data)
-            return names
+            return names.sorted()
         } catch {
             print("Error returning names")
             return nil

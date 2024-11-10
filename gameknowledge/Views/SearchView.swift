@@ -9,6 +9,7 @@ struct SearchView: View {
     @State private var searchText = ""
     @Binding var selectedText: String
     @State private var items: [String] = []
+    @Environment(\.dismiss) var dismiss
     
     // Computed property for filtered names based on searchText
     private var filteredNames: [String] {
@@ -23,6 +24,7 @@ struct SearchView: View {
                     ForEach(filteredNames, id: \.self) { item in
                         Button(action: {
                             selectedText = item
+                            dismiss()
                         }) {
                             Text(item)
                         }

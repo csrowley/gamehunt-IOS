@@ -286,22 +286,7 @@ struct InfiniteView: View {
                 
                 isFirstLaunch = false
             }
-//            else{
-//                let currGuessID = viewModel.gameHelper.getRandomID(insertIDS.ids)
-//                infiniteGuessID = currGuessID
-//                
-//                Task{
-//                    let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID))
-//                    let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID))
-//                    
-//                    infiniteGuessCoverURL = currGameCoverURL?.cover_url ?? ""
-//                    infiniteGuess = currGameInfo?.name ?? ""
-//                    
-//                    print(currGameInfo?.name ?? "")
-//                    print(currGameCoverURL?.cover_url ?? "")
-//                    
-//                }
-//            }
+
 
         }
         // Alert when the game is over
