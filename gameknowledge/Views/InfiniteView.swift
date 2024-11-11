@@ -16,6 +16,11 @@ import SwiftData
 /// doesnt refresh a new game for first launch?
 /// doesnt refresh a new game after a win?
 ///
+///
+/// TASK: -  Show in guesses list if same franchsise or not
+/// current issue: figure out how to save if same franchise  persist
+/// idea: we can make userGuesses into the ids of the game and when we foreach loop we can just retrieve the names. if the id has the same franchise we print as such else we dont
+///
 
 struct InfiniteView: View {
     let darkGrey = UIColor(red: (59/225), green: (54/225), blue: (54/225), alpha: 1)
@@ -27,7 +32,7 @@ struct InfiniteView: View {
     @AppStorage("blurCountInfinite") private var blurCountInfinite: Double = 12
     
     @Environment(\.modelContext) var modelContext
-    @Query var gameIds: [GameIds]
+    @Query var searchData: [SearchTerms]
     
     @AppStorage("firstLaunch") private var isFirstLaunch: Bool = true
     @AppStorage("infiniteGuess") private var infiniteGuess: String = "Buckshot Roulette"
@@ -46,6 +51,7 @@ struct InfiniteView: View {
     @AppStorage("isHintUsed") private var isHintUsed: Bool = false
     @AppStorage("showHintText") private var showHintText: Bool = false
     @AppStorage("hintText") private var hintText: String = ""
+    @State private var sameFranchiseGuess: Bool = false
     
     
     
@@ -125,6 +131,9 @@ struct InfiniteView: View {
                             Button {
                                 viewModel.submitFlag.toggle()
                                 prevAnswer = infiniteGuess
+                                
+                                
+                                
                                 if numLivesLeft > 0 && !viewModel.unqiueGuesses.contains(viewModel.searchText) && !viewModel.searchText.isEmpty {
                                     if viewModel.searchText == infiniteGuess {
                                         // Show winner screen and reset for a new game
@@ -137,8 +146,8 @@ struct InfiniteView: View {
                                         saveGuesses(true)
                                         
                                         Task {
-                                            if let allIds = gameIds.first?.ids {
-                                                await fetchNewGuess(allIds: allIds)
+                                            if let data = searchData.first {
+                                                await fetchNewGuess(data)
                                             } else {
                                                 print("Error! No game IDs available.")
                                             }
@@ -152,6 +161,23 @@ struct InfiniteView: View {
                                         
                                     } else {
                                         // Decrease lives and check for game over
+                                        Task{
+                                            let guessID = viewModel.searchID
+                                            let guessFranchise = try await LocalDatabase.shared.getFranchise(id: guessID)
+                                            
+                                            if let franchise = guessFranchise{
+                                                if infiniteGuessFranchise.isEmpty {
+                                                    return
+                                                }
+                                                
+                                                if !franchise.name.isEmpty && infiniteGuessFranchise == franchise.name {
+                                                    sameFranchiseGuess = true
+                                                }
+                                            } else {
+                                                sameFranchiseGuess = false
+                                            }
+                                        }
+                                        
                                         if numLivesLeft > 1 {
                                             viewModel.numLives -= 1
                                             numLivesLeft -= 1
@@ -175,8 +201,8 @@ struct InfiniteView: View {
 
                                             
                                             Task {
-                                                if let allIds = gameIds.first?.ids {
-                                                    await fetchNewGuess(allIds: allIds)
+                                                if let data = searchData.first {
+                                                    await fetchNewGuess(data)
                                                 } else {
                                                     print("Error! No game IDs available.")
                                                 }
@@ -253,7 +279,7 @@ struct InfiniteView: View {
                         Text("Use one time hint? Only one use per run.")
                     }
                     .sheet(isPresented: $viewModel.toggleSheetView) {
-                        SearchView(selectedText: $viewModel.searchText)
+                        SearchView(selectedText: $viewModel.searchText, selectedID: $viewModel.searchID)
                             .presentationDetents([.height(200), .medium, .large])
                             .presentationDragIndicator(.automatic)
                     }
@@ -289,34 +315,29 @@ struct InfiniteView: View {
             
             if isFirstLaunch {
                 
-                if let populateNames = viewModel.gameHelper.loadNames() {
-                    let insertNames = SearchTerms(names: populateNames)
+                if let populateTerms = viewModel.gameHelper.loadNamesAndIds() {
+                    let insertNames = SearchTerms(data: populateTerms)
                     modelContext.insert(insertNames)
                     do{
                         try modelContext.save()
                     } catch {
                         print("Error Saving names")
                     }
-                }
-                
-                if let populateIds = viewModel.gameHelper.importAllIds(){
-                    let insertIDS = GameIds(ids: populateIds)
-                    modelContext.insert(insertIDS)
-                    do{
-                        try modelContext.save()
-                    } catch {
-                        print("Error Saving ids")
-                    }
-                    let currGuessID = viewModel.gameHelper.getRandomID(insertIDS.ids)!
-                    infiniteGuessID = currGuessID
-                                        
                     
                     
                     Task{
+                        let currGuessID = viewModel.gameHelper.getRandomID(insertNames)
+
                         await LocalDatabase.populateDatabase()
                         
-                        let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID))
-                        let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID))
+                        let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID!))
+                        let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID!))
+                        
+                        if let franchiseID = Int64(currGameInfo?.franchise ?? ""){
+                            let franchise = try await LocalDatabase.shared.getFranchise(id: Int64(franchiseID))
+                            infiniteGuessFranchise = franchise?.name ?? "none"
+                            print(infiniteGuessFranchise)
+                        }
                         
                         infiniteGuessCoverURL = currGameCoverURL?.cover_url ?? "none"
                         infiniteGuess = currGameInfo?.name ?? "none"
@@ -325,9 +346,6 @@ struct InfiniteView: View {
                         print(infiniteGuessCoverURL)
                         
                     }
-                    
-                    
-                    
                     
                 }
                 
@@ -364,10 +382,10 @@ struct InfiniteView: View {
     
     
     @MainActor
-    private func fetchNewGuess(allIds: [Int]) async {
+    private func fetchNewGuess(_ termData: SearchTerms) async {
         do {
             // Ensure `getRandomID` returns an optional, as only it requires optional binding
-            if let currGuessID = viewModel.gameHelper.getRandomID(allIds) {
+            if let currGuessID = viewModel.gameHelper.getRandomID(termData) {
                 // Since `getGameInfo` and `getCoverLink` return non-optional values, assign them directly
                 let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID))
                 let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID))
@@ -394,25 +412,14 @@ struct InfiniteView: View {
                 // Assign values after async operations are complete
                 infiniteGuessCoverURL = currGameCoverURL?.cover_url ?? ""
                 infiniteGuess = currGameInfo?.name ?? "No Game Found"
-                infiniteGuessID = currGuessID
+                
+                infiniteGuessID = Int(currGuessID)
+                
             } else {
                 print("Error: Unable to retrieve a random ID.")
             }
         } catch {
             print("Error fetching new guess: \(error)")
-        }
-    }
-    
-    
-    private func fetchFranchise(_ id: Int64) async {
-        do {
-            guard let gameFranchise = try await LocalDatabase.shared.getFranchise(id: id) else {
-                return
-            }
-            
-            infiniteGuessFranchise = gameFranchise.name
-        } catch {
-            print("Error retriving franchise with given ID: \(error)")
         }
     }
 

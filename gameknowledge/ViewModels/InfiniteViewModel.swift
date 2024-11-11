@@ -13,6 +13,7 @@ extension InfiniteView{
     class ViewModel{
         var correctGuess = "Apple" //will change to DB call?
         var searchText = ""
+        var searchID: Int64 = 0
         var numLives = 5
         var unqiueGuesses: Set<String> = []
         var userGuessed: [String] = []

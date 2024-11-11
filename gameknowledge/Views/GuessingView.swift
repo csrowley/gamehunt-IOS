@@ -5,12 +5,11 @@ struct GuessingView: View {
     let darkGrey = UIColor(red: (59/225), green: (54/225), blue: (54/225), alpha: 1)
     
     @State private var viewModel = ViewModel()
-    @State private var test = "hi"
     @State private var showGameOverAlert = false // State for showing game over alert
     @AppStorage("blurCount") private var blurCount: Int = 12
     
     @Environment(\.modelContext) var modelContext
-    @Query var gameIds: [GameIds]
+    @Query var searchData: [SearchTerms]
     
     @AppStorage("firstLaunch") private var isFirstLaunch: Bool = true
     @AppStorage("dailyGuess") private var dailyGuess: String = "Buckshot Roulette"
@@ -18,7 +17,7 @@ struct GuessingView: View {
     @AppStorage("dailyGuessID") private var dailyGuessID: Int = 1
     @AppStorage("dailyGuessCoverURL") private var dailyGuessCoverURL: String = "https://images.igdb.com/igdb/image/upload/t_cover_big/co85h5.jpg"
     
-    @AppStorage("dailyGuessFranchise") private var dailyGuessFranchise: String = "None"
+    @AppStorage("dailyGuessFranchise") private var dailyGuessFranchise: String = ""
     @AppStorage("lastLoginDate") private var lastLoginDate: String = ""
     
     @AppStorage("dailyLives") private var numLivesLeft: Int = 5
@@ -141,7 +140,7 @@ struct GuessingView: View {
                         .padding(.bottom)
                     }
                     .sheet(isPresented: $viewModel.toggleSheetView) {
-                        SearchView(selectedText: $viewModel.searchText)
+                        SearchView(selectedText: $viewModel.searchText, selectedID: $viewModel.searchID)
                             .presentationDetents([.height(300), .medium, .large])
                             .presentationDragIndicator(.automatic)
                     }
@@ -179,45 +178,31 @@ struct GuessingView: View {
             
             formatter.dateFormat = "yyyy-MM-dd"
             let lastLoginString = formatter.string(from: todaysDate)
-            
+                        
             if isFirstLaunch {
-
-                lastLoginDate = lastLoginString
                 
-                if let populateNames = viewModel.gameHelper.loadNames() {
-                    let insertNames = SearchTerms(names: populateNames)
+                if let populateTerms = viewModel.gameHelper.loadNamesAndIds() {
+                    let insertNames = SearchTerms(data: populateTerms)
                     modelContext.insert(insertNames)
                     do{
                         try modelContext.save()
                     } catch {
                         print("Error Saving names")
                     }
-                }
-                
-                if let populateIds = viewModel.gameHelper.importAllIds(){
-                    let insertIDS = GameIds(ids: populateIds)
-                    modelContext.insert(insertIDS)
-                    do{
-                        try modelContext.save()
-                    } catch {
-                        print("Error Saving ids")
-                    }
-                    let currGuessID = viewModel.gameHelper.getRandomID(insertIDS.ids)!
-                    dailyGuessID = currGuessID
-                                        
-                    Task{
-                        await LocalDatabase.populateDatabase()
-                        let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID))
-                        let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID))
-                        
-                        dailyGuessCoverURL = currGameCoverURL?.cover_url ?? ""
-                        dailyGuess = currGameInfo?.name ?? ""
-                        
-                        print(currGameInfo?.name ?? "no name")
-                        print(currGameCoverURL?.cover_url ?? "no url")
-                        
-                    }
                     
+                    
+                    Task{
+                        let currGuessID = viewModel.gameHelper.getRandomID(insertNames)
+
+                        await LocalDatabase.populateDatabase()
+                        
+                        let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID!))
+                        let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID!))
+                        
+                        dailyGuessCoverURL = currGameCoverURL?.cover_url ?? "none"
+                        dailyGuess = currGameInfo?.name ?? "none"
+                        
+                    }
                     
                 }
                 
@@ -230,15 +215,17 @@ struct GuessingView: View {
                 viewModel.unqiueGuesses.removeAll()
                 numLivesLeft = 5
                 blurCount = 12
+                
+                
                 Task{
-                    if let allIds = gameIds.first?.ids{
-                        let currGuessID = viewModel.gameHelper.getRandomID(allIds)
+                    if let searchTermData = searchData.first{
+                        let currGuessID = viewModel.gameHelper.getRandomID(searchTermData)
                         let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID!))
                         let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID!))
                         
                         dailyGuessCoverURL = currGameCoverURL?.cover_url ?? ""
                         dailyGuess = currGameInfo?.name ?? ""
-                        dailyGuessID = currGuessID!
+                        dailyGuessID = Int(currGuessID!)
                     }
                     
                     lastLoginDate = lastLoginString

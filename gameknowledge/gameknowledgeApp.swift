@@ -12,9 +12,8 @@ import SwiftData
 struct gameknowledgeApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
             SearchTerms.self,
-            GameIds.self
+            SearchData.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

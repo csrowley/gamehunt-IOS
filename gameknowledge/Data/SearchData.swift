@@ -34,21 +34,26 @@ extension SearchView{
 }
 
 @Model
-class SearchTerms {
+class SearchTerms: Identifiable {
+    @Attribute(.unique) var key: UUID
+    var data: [SearchData]
     
-    var names: [String]
-    
-    init(names: [String]) {
-        self.names = names
+    init(data: [SearchData], key: UUID = UUID()) {
+        self.key = key
+        self.data = data
     }
 }
 
 @Model
-class GameIds{
-    var ids: [Int]
+class SearchData: Identifiable{
+    @Attribute(.unique) var uid: UUID
+    var name: String
+    var id: Int64
     
-    init(ids: [Int]) {
-        self.ids = ids
+    init(name: String, id: Int64, uid: UUID = UUID()) {
+        self.uid = uid
+        self.name = name
+        self.id = id
     }
 }
 	

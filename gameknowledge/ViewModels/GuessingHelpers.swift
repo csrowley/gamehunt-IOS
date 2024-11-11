@@ -59,15 +59,44 @@ class GuessingHelpers {
             return nil
         }
     }
-
-    // Generate a random ID from a list of IDs
-    func getRandomID(_ allIds: [Int]) -> Int? {
-        if let randomID = allIds.randomElement() {
-            return randomID
-        } else {
-            print("Error returning random ID")
+    
+    func loadNamesAndIds() -> [SearchData]? {
+        guard let namesURL = Bundle.main.url(forResource: "names", withExtension: "json"),
+            let idsURL = Bundle.main.url(forResource: "ids", withExtension: "json") else {
+            print("path not found for either 'names.json' or 'ids.json'")
             return nil
         }
+        
+        do {
+            let nameData = try Data(contentsOf: namesURL)
+            let idData = try Data(contentsOf: idsURL)
+            
+            let names = try JSONDecoder().decode([String].self, from: nameData)
+            let ids = try JSONDecoder().decode([Int64].self, from: idData)
+            
+            guard names.count == ids.count else{
+                print("Array lengths do not match")
+                return nil
+            }
+            
+            return Array(zip(names, ids))
+                .map{SearchData(name: $0.0, id: $0.1)}
+                .sorted {$0.name < $1.name}
+            
+        } catch {
+            print("error returning tuple array of  (name, id)", error)
+            return nil
+        }
+    }
+
+    // Generate a random ID from a list of IDs
+    func getRandomID(_ termData: SearchTerms) -> Int64? {
+        guard let randomID = termData.data.randomElement() else {
+            print("Couldnt retrieve random id")
+            return nil
+        }
+        
+        return randomID.id
     }
 
     // Check if a refresh is needed based on the last login date
