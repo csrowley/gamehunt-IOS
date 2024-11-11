@@ -11,11 +11,6 @@ extension SearchView{
     
     @Observable
     class ViewModel{
-//        var allNames: [String] = []
-//        
-//        init(allNames: [String]) {
-//            self.allNames = allNames
-//        }
         
         func loadNames() -> [String]? {
             guard let pathName = Bundle.main.url(forResource: "names", withExtension: "json") else{

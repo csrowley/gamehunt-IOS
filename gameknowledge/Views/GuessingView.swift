@@ -24,6 +24,7 @@ struct GuessingView: View {
     @AppStorage("dailyLives") private var numLivesLeft: Int = 5
     @AppStorage("userGuessesDaily") private var dailyUserGuess: Data?
     @AppStorage("isWinner") private var isWinner: Bool = false
+    @AppStorage("dailyStreak") private var dailyStreak: Int = 0
     
     init() {
         UISearchBar.appearance().overrideUserInterfaceStyle = .dark
@@ -38,7 +39,15 @@ struct GuessingView: View {
                 Text("Daily Guess")
                     .font(Font.custom("Jersey10-Regular", size: 50))
                     .foregroundStyle(.white)
-                    .padding(.bottom, 25)
+                
+                HStack {
+                    Text("Streak: ")
+                        .font(Font.custom("Jersey10-Regular", size: 30))
+                        .foregroundStyle(.white)
+                    Text(String(dailyStreak))
+                        .font(Font.custom("Jersey10-Regular", size: 30))
+                        .foregroundStyle(.orange)
+                }
                 
                 VStack {
                     AsyncImage(url: URL(string: dailyGuessCoverURL)) { image in
@@ -84,6 +93,7 @@ struct GuessingView: View {
                                         // Show winner screen
                                         isWinner.toggle()
                                         blurCount = 0
+                                        dailyStreak += 1
                                     } else {
                                         // Decrease lives and check for game over
                                         if numLivesLeft > 1 {
@@ -92,8 +102,10 @@ struct GuessingView: View {
                                             viewModel.unqiueGuesses.insert(viewModel.searchText)
                                             viewModel.userGuessed.append(viewModel.searchText)
                                             saveGuesses(false)
-                                            blurCount = max(2, blurCount - 2)
+                                            blurCount = max(3, blurCount - 2)
                                         } else {
+                                            dailyStreak = 0
+                                            
                                             numLivesLeft = 0
                                             blurCount = 12
                                             showGameOverAlert = true // Trigger the game-over alert
@@ -146,7 +158,7 @@ struct GuessingView: View {
                                         .font(Font.custom("Jersey10-Regular", size: 25))
                                         .foregroundColor(.green)
                                 } else {
-                                    Text("Wrong saga")
+                                    Text("Wrong")
                                         .font(Font.custom("Jersey10-Regular", size: 25))
                                         .foregroundColor(.red)
                                 }

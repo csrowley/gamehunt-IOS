@@ -22,7 +22,9 @@ struct InfiniteView: View {
     
     @State private var viewModel = ViewModel()
     @State private var showGameOverAlert = false // State for showing game over alert
-    @AppStorage("blurCountInfinite") private var blurCountInfinite: Int = 12
+    @State private var showHintAlert = false
+    @State private var infiniteGuessInfo: Game? = nil
+    @AppStorage("blurCountInfinite") private var blurCountInfinite: Double = 12
     
     @Environment(\.modelContext) var modelContext
     @Query var gameIds: [GameIds]
@@ -33,13 +35,20 @@ struct InfiniteView: View {
     @AppStorage("infiniteGuessID") private var infiniteGuessID: Int = 1
     @AppStorage("infiniteGuessCoverURL") private var infiniteGuessCoverURL: String = "https://images.igdb.com/igdb/image/upload/t_cover_big/co85h5.jpg"
     
-    @AppStorage("infiniteGuessFranchise") private var infiniteGuessFranchise: String = "None"
+    @AppStorage("infiniteGuessFranchise") private var infiniteGuessFranchise: String = ""
     
     @AppStorage("infiniteLives") private var numLivesLeft: Int = 5
     @AppStorage("userGuessesInfinite") private var infiniteUserGuess: Data?
     @AppStorage("isWinnerInfinite") private var isWinnerInfinite: Bool = false
     
     @AppStorage("infiniteScore") private var infiniteScore: Int = 0
+    
+    @AppStorage("isHintUsed") private var isHintUsed: Bool = false
+    @AppStorage("showHintText") private var showHintText: Bool = false
+    @AppStorage("hintText") private var hintText: String = ""
+    
+    
+    
     @State private var prevAnswer = "Buckshot Roulette"
     
     init() {
@@ -89,8 +98,20 @@ struct InfiniteView: View {
                         }
                     }
                     .padding(.bottom, 5)
+                    
+                    if showHintText && !isWinnerInfinite && numLivesLeft > 0{
+                            HStack {
+                                Text("Hint:")
+                                    .font(Font.custom("Jersey10-Regular", size: 30))
+                                    .foregroundColor(.white)
+                                Text("\(infiniteGuessFranchise)") // insert franchise hint
+                                    .font(Font.custom("Jersey10-Regular", size: 30))
+                                    .foregroundColor(.orange)
+                                
+                            }
+                    }
                                         
-                    if isWinnerInfinite {
+                    else if isWinnerInfinite {
                         Text("Winner")
                             .font(Font.custom("Jersey10-Regular", size: 30))
                             .foregroundColor(.green)
@@ -114,7 +135,7 @@ struct InfiniteView: View {
                                         viewModel.userGuessed.removeAll()
                                         viewModel.unqiueGuesses.removeAll()
                                         saveGuesses(true)
-
+                                        
                                         Task {
                                             if let allIds = gameIds.first?.ids {
                                                 await fetchNewGuess(allIds: allIds)
@@ -126,8 +147,9 @@ struct InfiniteView: View {
                                             viewModel.searchText = "" // Clear search text
                                             viewModel.submitFlag = false // Reset submit flag
                                             isWinnerInfinite = false // Reset winner flag
+                                            showHintText = false
                                         }
-
+                                        
                                     } else {
                                         // Decrease lives and check for game over
                                         if numLivesLeft > 1 {
@@ -136,7 +158,7 @@ struct InfiniteView: View {
                                             viewModel.unqiueGuesses.insert(viewModel.searchText)
                                             viewModel.userGuessed.append(viewModel.searchText)
                                             saveGuesses(false)
-                                            blurCountInfinite = max(2, blurCountInfinite - 2)
+                                            blurCountInfinite = max(3, blurCountInfinite - 2)
                                         } else {
                                             showGameOverAlert = true // Trigger the game-over alert
                                             infiniteScore = 0
@@ -147,7 +169,11 @@ struct InfiniteView: View {
                                             viewModel.userGuessed.removeAll()
                                             viewModel.unqiueGuesses.removeAll()
                                             saveGuesses(true)
+                                            
+                                            isHintUsed = false
+                                            showHintText = false
 
+                                            
                                             Task {
                                                 if let allIds = gameIds.first?.ids {
                                                     await fetchNewGuess(allIds: allIds)
@@ -171,7 +197,7 @@ struct InfiniteView: View {
                                     .foregroundStyle(Color.green)
                                     .font(.system(size: 30))
                             }
-
+                            
                         }
                         .padding()
                         .foregroundColor(Color.black)
@@ -179,21 +205,52 @@ struct InfiniteView: View {
                         .cornerRadius(10)
                         .padding(.horizontal)
                         
-                        Button {
-                            viewModel.toggleSheetView.toggle()
-                        } label: {
-                            HStack {
-                                Image(systemName: "magnifyingglass")
-                                Text("Search All Games")
-                                    .font(Font.custom("Jersey10-Regular", size: 25))
+                        HStack{
+                            Button {
+                                viewModel.toggleSheetView.toggle()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "magnifyingglass")
+                                    Text("Search")
+                                        .font(Font.custom("Jersey10-Regular", size: 25))
+                                }
+                                .padding()
+                                .background(Color.orange)
+                                .foregroundStyle(Color.white)
+                                .cornerRadius(10)
+                                .padding(.horizontal)
                             }
-                            .padding()
-                            .background(Color.orange)
-                            .foregroundStyle(Color.white)
-                            .cornerRadius(10)
-                            .padding(.horizontal)
+                            
+                            Button {
+                                if !isHintUsed{
+                                    showHintAlert.toggle()
+                                }
+                            } label : {
+                                HStack {
+                                    Text("One Time Hint")
+                                        .font(Font.custom("Jersey10-Regular", size: 25))
+                                        .foregroundStyle(.white)
+                                    Image(systemName: "questionmark.app.fill")
+                                        .foregroundStyle(.orange)
+                                        .font(.system(size: 25))
+                                        .symbolRenderingMode(.multicolor)
+                                }
+                                .padding()
+                                .background(Color.gray.opacity(0.2))
+                                
+                                .cornerRadius(10)
+                                
+                            }
                         }
-                        .padding(.bottom)
+                    }
+                    .alert("Hint", isPresented: $showHintAlert){
+                        Button("Yes"){
+                            isHintUsed.toggle()
+                            showHintText.toggle()
+                        }
+                        Button("No", role: .cancel){}
+                    } message: {
+                        Text("Use one time hint? Only one use per run.")
                     }
                     .sheet(isPresented: $viewModel.toggleSheetView) {
                         SearchView(selectedText: $viewModel.searchText)
@@ -253,17 +310,7 @@ struct InfiniteView: View {
                     let currGuessID = viewModel.gameHelper.getRandomID(insertIDS.ids)!
                     infiniteGuessID = currGuessID
                                         
-//                    Task{
-//                        let currGameInfo = try await viewModel.gameHelper.getGameInfo(currGuessID)
-//                        let currGameCoverURL = try await viewModel.gameHelper.getCoverLink(currGuessID)
-//                        
-//                        infiniteGuessCoverURL = currGameCoverURL
-//                        infiniteGuess = currGameInfo!.name
-//                        
-//                        print(currGameInfo!.name)
-//                        print(currGameCoverURL)
-//                        
-//                    }
+                    
                     
                     Task{
                         await LocalDatabase.populateDatabase()
@@ -325,6 +372,25 @@ struct InfiniteView: View {
                 let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID))
                 let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID))
                 
+//                if let currGame = currGameInfo{
+//                    if !currGame.franchise!.isEmpty{
+//                        if let franchiseID = Int64(currGame.franchise!){
+//                            let franchise = try await LocalDatabase.shared.getFranchise(id: Int64(franchiseID))
+//                            infiniteGuessFranchise = franchise?.name ?? ""
+//                        }
+//                    }
+//                }
+                
+                if let franchiseID = Int64(currGameInfo?.franchise ?? ""){
+                    let franchise = try await LocalDatabase.shared.getFranchise(id: Int64(franchiseID))
+                    infiniteGuessFranchise = franchise?.name ?? "none"
+                    print(infiniteGuessFranchise)
+                }
+                else{
+                    print("error obtaining franchise")
+                }
+                print(currGameInfo!.franchise!)
+                
                 // Assign values after async operations are complete
                 infiniteGuessCoverURL = currGameCoverURL?.cover_url ?? ""
                 infiniteGuess = currGameInfo?.name ?? "No Game Found"
@@ -334,6 +400,19 @@ struct InfiniteView: View {
             }
         } catch {
             print("Error fetching new guess: \(error)")
+        }
+    }
+    
+    
+    private func fetchFranchise(_ id: Int64) async {
+        do {
+            guard let gameFranchise = try await LocalDatabase.shared.getFranchise(id: id) else {
+                return
+            }
+            
+            infiniteGuessFranchise = gameFranchise.name
+        } catch {
+            print("Error retriving franchise with given ID: \(error)")
         }
     }
 

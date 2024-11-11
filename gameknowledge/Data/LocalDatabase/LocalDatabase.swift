@@ -70,6 +70,7 @@ extension LocalDatabase {
         // Import games first since covers depend on them
         try await importGamesFromFile()
         try await importCoversFromFile()
+        try await importFranchisesFromFile()
         print("✅ Database import completed successfully")
     }
 
@@ -120,6 +121,32 @@ extension LocalDatabase {
             }
         }
     }
+    
+    
+    private func importFranchisesFromFile() async throws {
+        guard let url = Bundle.main.url(forResource: "franchises_rows", withExtension: "json") else {
+            throw ImportError(message: "franchises_rows not found, error loading")
+        }
+        
+        let jsonData = try Data(contentsOf: url)
+        
+        try await writer.write{ db in
+            do{
+                let franchises = try JSONDecoder().decode([Franchise].self, from: jsonData)
+                print("📥 Importing \(franchises.count) franchises...")
+                
+                for franchise in franchises {
+                    try franchise.insert(db)
+                }
+                print("✅ Covers import successful")
+                
+            } catch {
+                print("❌ Franchises import failed: \(error)")
+                throw error  // Re-throw the error to ensure it exits the transaction
+            }
+        }
+    }
+    
 }
 
 // MARK: - Usage Example
@@ -152,6 +179,14 @@ extension LocalDatabase {
         try await reader.read {db in
             try Cover
                 .filter(Column("cover_id") == id)
+                .fetchOne(db)
+        }
+    }
+    
+    func getFranchise(id: Int64) async throws -> Franchise? {
+        try await reader.read {db in
+            try Franchise
+                .filter(Column("id") == id)
                 .fetchOne(db)
         }
     }

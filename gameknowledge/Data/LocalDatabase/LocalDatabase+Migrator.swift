@@ -43,7 +43,7 @@ extension LocalDatabase {
         
         
         try db.create(table: "franchise"){ table in
-            table.column("franchise_id", .integer).notNull().primaryKey()
+            table.column("id", .integer).primaryKey().notNull()
             table.column("name", .text)
         }
     }

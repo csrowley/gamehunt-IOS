@@ -5,6 +5,12 @@
 //  Created by Chris Rowley on 11/8/24.
 //
 
+//add franchise hints
+// add daily streak
+// add coins?
+// add tutorial ?
+// add hint that will unblur a specific part of the picture
+
 import Foundation
 import GRDB
 

@@ -5,6 +5,8 @@
 //  Created by Chris Rowley on 11/6/24.
 //
 
+/// with search and id arrays in swift data, i can possibly create 1 array? with formaat of [(id, name)] when looping through list of search data, when user clicks a search term we can retrieve the franchise with the id and give data in the results
+
 import Foundation
 import Supabase
 
@@ -12,16 +14,7 @@ import Foundation
 import Supabase
 
 class GuessingHelpers {
-    // Supabase client for database interactions
-//    private let supabase: SupabaseClient
-//
-//    init() {
-//        supabase = SupabaseClient(
-//            supabaseURL: URL(string: "")!,
-//            supabaseKey: "" // public key (read-only)
-//        )
-//    }
-
+    
     struct GameInfo: Codable {
         let name: String
         let id: Int
@@ -32,40 +25,6 @@ class GuessingHelpers {
     struct CoverURL: Codable {
         let cover_url: String
     }
-
-    // Fetch cover URL based on cover ID
-//    func getCoverLink(_ coverID: Int) async throws -> String {
-//        let idToURL: [CoverURL] = try await supabase
-//            .from("Covers")
-//            .select("cover_url")
-//            .eq("cover_id", value: coverID)
-//            .limit(1)
-//            .execute()
-//            .value
-//
-//        guard let resURL = idToURL.first?.cover_url else {
-//            print("Error with fetching URL")
-//            return ""
-//        }
-//        return resURL
-//    }
-//
-//    // Fetch game info based on game ID
-//    func getGameInfo(_ id: Int) async throws -> GameInfo? {
-//        let randomGame: [GameInfo] = try await supabase
-//            .from("Games")
-//            .select()
-//            .eq("id", value: id)
-//            .limit(1)
-//            .execute()
-//            .value
-//
-//        guard let gameInfo = randomGame.first else {
-//            print("Error with fetching game info")
-//            return nil
-//        }
-//        return gameInfo
-//    }
 
     // Load game IDs from JSON file
     func importAllIds() -> [Int]? {

@@ -21,6 +21,7 @@
 		7911DB422CDF04CD0035FE05 /* games_rows.json in Resources */ = {isa = PBXBuildFile; fileRef = 7911DB412CDF04CD0035FE05 /* games_rows.json */; };
 		7911DB442CDF05370035FE05 /* Cover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7911DB432CDF05370035FE05 /* Cover.swift */; };
 		795D5C832CDF26930067EA0D /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 795D5C822CDF26930067EA0D /* GRDB */; };
+		795D5C852CE05F150067EA0D /* Franchise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795D5C842CE05F150067EA0D /* Franchise.swift */; };
 		797798C42CD5CF73004A0872 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 797798C32CD5CF73004A0872 /* Supabase */; };
 		797798CA2CD7352F004A0872 /* names.json in Resources */ = {isa = PBXBuildFile; fileRef = 797798C92CD7352F004A0872 /* names.json */; };
 		797798CB2CD7352F004A0872 /* ids.json in Resources */ = {isa = PBXBuildFile; fileRef = 797798C82CD7352F004A0872 /* ids.json */; };
@@ -85,6 +86,7 @@
 		7911DB412CDF04CD0035FE05 /* games_rows.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = games_rows.json; sourceTree = "<group>"; };
 		7911DB432CDF05370035FE05 /* Cover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cover.swift; sourceTree = "<group>"; };
 		794F055D2CD74E37000BD603 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		795D5C842CE05F150067EA0D /* Franchise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Franchise.swift; sourceTree = "<group>"; };
 		797798C72CD5F64E004A0872 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		797798C82CD7352F004A0872 /* ids.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ids.json; sourceTree = "<group>"; };
 		797798C92CD7352F004A0872 /* names.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = names.json; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				79DAC4A72CB503E00025E2A5 /* SearchData.swift */,
 				7911DB3B2CDF032A0035FE05 /* Game.swift */,
 				7911DB432CDF05370035FE05 /* Cover.swift */,
+				795D5C842CE05F150067EA0D /* Franchise.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				799AB37D2C980D2600026580 /* Item.swift in Sources */,
 				79DAC4A82CB503EC0025E2A5 /* SearchData.swift in Sources */,
 				79C8274A2CA138750002541D /* ModeSelectButton.swift in Sources */,
+				795D5C852CE05F150067EA0D /* Franchise.swift in Sources */,
 				79BBB1E72CD481B80004F635 /* SearchView.swift in Sources */,
 				79BEF0972CDC378500E02A77 /* InfiniteView.swift in Sources */,
 				79C827522CA2565A0002541D /* GuessingView.swift in Sources */,
