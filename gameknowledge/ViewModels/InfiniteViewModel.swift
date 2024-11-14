@@ -15,8 +15,8 @@ extension InfiniteView{
         var searchText = ""
         var searchID: Int64 = 0
         var numLives = 5
-        var unqiueGuesses: Set<String> = []
-        var userGuessed: [String] = []
+        var unqiueGuesses: Set<Int64> = []
+        var userGuessed: [GameGuess] = []
         var submitFlag = false
         var toggleSheetView = false
         var isWinner = false
@@ -24,6 +24,15 @@ extension InfiniteView{
         var score: Int = 0
         
         let gameHelper = GuessingHelpers()
+        
+        
+        
+    }
+    
+    struct GameGuess: Codable, Identifiable{
+        let name: String
+        let id: Int64
+        let sameFranchise: Bool
     }
     
     

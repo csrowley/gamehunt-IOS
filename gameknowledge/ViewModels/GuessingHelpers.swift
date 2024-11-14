@@ -116,4 +116,6 @@ class GuessingHelpers {
         
         return !Calendar.current.isDate(lastLoginDate, inSameDayAs: currentDate)
     }
+    
+    
 }

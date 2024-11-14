@@ -36,10 +36,6 @@ struct ContentView: View {
                         ModeSelectButton(usrPrompt: "Infinite Mode", toggleView: $showInfiniteView)
                             .padding(.bottom, 10)
                         
-                        // ModeSelectButton(usrPrompt: "Marathon")
-                        //     .padding(.bottom, 10)
-                        // ModeSelectButton(usrPrompt: "Special Mode")
-                        //     .padding(.bottom, 10)
                     }
                     .padding(100)
                 }

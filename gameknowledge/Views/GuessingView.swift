@@ -25,6 +25,9 @@ struct GuessingView: View {
     @AppStorage("isWinner") private var isWinner: Bool = false
     @AppStorage("dailyStreak") private var dailyStreak: Int = 0
     
+    @State private var sameFranchiseGuess: Bool = false
+
+    
     init() {
         UISearchBar.appearance().overrideUserInterfaceStyle = .dark
     }
@@ -87,7 +90,7 @@ struct GuessingView: View {
                             Button {
                                 viewModel.submitFlag.toggle()
                                 
-                                if numLivesLeft > 0 && !isWinner && !viewModel.unqiueGuesses.contains(viewModel.searchText) && !viewModel.searchText.isEmpty {
+                                if numLivesLeft > 0 && !isWinner && !viewModel.unqiueGuesses.contains(viewModel.searchID) && !viewModel.searchText.isEmpty {
                                     if viewModel.searchText == dailyGuess {
                                         // Show winner screen
                                         isWinner.toggle()
@@ -96,17 +99,21 @@ struct GuessingView: View {
                                     } else {
                                         // Decrease lives and check for game over
                                         if numLivesLeft > 1 {
-                                            viewModel.numLives -= 1
-                                            numLivesLeft -= 1
-                                            viewModel.unqiueGuesses.insert(viewModel.searchText)
-                                            viewModel.userGuessed.append(viewModel.searchText)
-                                            saveGuesses(false)
-                                            blurCount = max(3, blurCount - 2)
+                                            Task {
+                                                let isSameFranchise = await checkFranchiseMatch()
+                                                
+                                                viewModel.numLives -= 1
+                                                numLivesLeft -= 1
+                                                viewModel.unqiueGuesses.insert(viewModel.searchID)
+                                                viewModel.userGuessed.append(GameGuess(name: viewModel.searchText, id: viewModel.searchID, sameFranchise: isSameFranchise))
+                                                saveGuesses(false)
+                                                blurCount = max(3, blurCount - 2)
+                                            }
                                         } else {
                                             dailyStreak = 0
                                             
                                             numLivesLeft = 0
-                                            blurCount = 12
+                                            blurCount = 0
                                             showGameOverAlert = true // Trigger the game-over alert
                                         }
                                     }
@@ -146,20 +153,27 @@ struct GuessingView: View {
                     }
                     
                     List {
-                        ForEach(viewModel.userGuessed, id: \.self) { name in
+                        ForEach(viewModel.userGuessed) { game in
                             HStack {
-                                Text(name)
+                                Text(game.name)
                                     .font(Font.custom("Jersey10-Regular", size: 25))
                                     .foregroundColor(.white)		
                                 Spacer()
-                                if name == dailyGuess {
+                                if game.name == dailyGuess {
                                     Text("Winner")
                                         .font(Font.custom("Jersey10-Regular", size: 25))
                                         .foregroundColor(.green)
                                 } else {
-                                    Text("Wrong")
-                                        .font(Font.custom("Jersey10-Regular", size: 25))
-                                        .foregroundColor(.red)
+                                    if game.sameFranchise {
+                                        Text("Same Franchise")
+                                            .font(Font.custom("Jersey10-Regular", size: 25))
+                                            .foregroundColor(.yellow)
+                                    }
+                                    else {
+                                        Text("Wrong")
+                                            .font(Font.custom("Jersey10-Regular", size: 25))
+                                            .foregroundColor(.red)
+                                    }
                                 }
                             }
                         }
@@ -196,8 +210,16 @@ struct GuessingView: View {
 
                         await LocalDatabase.populateDatabase()
                         
+                        
+                        
                         let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID!))
                         let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID!))
+                        
+                        if let franchiseID = Int64(currGameInfo?.franchise ?? ""){
+                            let franchise = try await LocalDatabase.shared.getFranchise(id: Int64(franchiseID))
+                            dailyGuessFranchise = franchise?.name ?? "none"
+                            print(dailyGuessFranchise)
+                        }
                         
                         dailyGuessCoverURL = currGameCoverURL?.cover_url ?? "none"
                         dailyGuess = currGameInfo?.name ?? "none"
@@ -223,6 +245,13 @@ struct GuessingView: View {
                         let currGameInfo = try await LocalDatabase.shared.getGame(id: Int64(currGuessID!))
                         let currGameCoverURL = try await LocalDatabase.shared.getCover(id: Int64(currGuessID!))
                         
+                        
+                        if let franchiseID = Int64(currGameInfo?.franchise ?? ""){
+                            let franchise = try await LocalDatabase.shared.getFranchise(id: Int64(franchiseID))
+                            dailyGuessFranchise = franchise?.name ?? "none"
+                            print(dailyGuessFranchise)
+                        }
+                        
                         dailyGuessCoverURL = currGameCoverURL?.cover_url ?? ""
                         dailyGuess = currGameInfo?.name ?? ""
                         dailyGuessID = Int(currGuessID!)
@@ -242,20 +271,50 @@ struct GuessingView: View {
         }
     }
     
-    private func saveGuesses(_ isNewLoad: Bool){
-        if isNewLoad{
+    private func saveGuesses(_ isNewLoad: Bool) {
+        if isNewLoad {
             dailyUserGuess = Data()
+        } else {
+            // Encode the array of GameGuess structs directly
+            if let data = try? JSONEncoder().encode(viewModel.userGuessed) {
+                dailyUserGuess = data
+            }
         }
-        else if let data = try? JSONEncoder().encode(viewModel.userGuessed){
-            dailyUserGuess = data
+    }
+
+    private func loadGuesses() {
+        if let data = dailyUserGuess,
+           let savedData = try? JSONDecoder().decode([GameGuess].self, from: data) {
+            // Decode directly to array of GameGuess
+            viewModel.userGuessed = savedData
         }
     }
     
-    private func loadGuesses(){
-        if let data = dailyUserGuess,
-           let savedData = try? JSONDecoder().decode([String].self, from: data){
-            viewModel.userGuessed = savedData
+    
+    
+    private func checkFranchiseMatch() async -> Bool {
+        let guessID = viewModel.searchID
+        do {
+            if let gameInfo = try await LocalDatabase.shared.getGame(id: guessID),
+               let franchiseInt = Int64(gameInfo.franchise!),
+               let guessFranchise = try await LocalDatabase.shared.getFranchise(id: franchiseInt) {
+
+                // Perform MainActor updates within this async function
+                await MainActor.run {
+                    if (!dailyGuessFranchise.isEmpty && !guessFranchise.name.isEmpty) && (dailyGuessFranchise == guessFranchise.name) {
+                        sameFranchiseGuess = true
+                    } else {
+                        sameFranchiseGuess = false
+                    }
+                    print("Infinite Guess Franchise: \(dailyGuessFranchise)")
+                    print("Your Guess Franchise: \(guessFranchise.name)")
+                }
+                return sameFranchiseGuess
+            }
+        } catch {
+            print("Error with franchise comparison: \(error)")
         }
+        return false
     }
 }
 

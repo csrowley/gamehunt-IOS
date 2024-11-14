@@ -5,10 +5,10 @@ struct SearchView: View {
     @State private var viewModel = ViewModel()
     @Environment(\.modelContext) var modelContext
     @Query var searchNames: [SearchTerms]
-    
-    @State private var searchText = ""
     @Binding var selectedText: String
     @Binding var selectedID: Int64
+    @State private var searchText = ""
+
     @State private var items: [SearchData] = []
     @Environment(\.dismiss) var dismiss
     
@@ -25,6 +25,7 @@ struct SearchView: View {
                     ForEach(filteredNames, id: \.self) { item in
                         Button(action: {
                             selectedText = item.name
+                            selectedID = item.id
                             dismiss()
                         }) {
                             Text(item.name)

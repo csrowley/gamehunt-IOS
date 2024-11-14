@@ -51,6 +51,8 @@
 		79C8274A2CA138750002541D /* ModeSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C827492CA138750002541D /* ModeSelectButton.swift */; };
 		79C827522CA2565A0002541D /* GuessingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C827512CA2565A0002541D /* GuessingView.swift */; };
 		79DAC4A82CB503EC0025E2A5 /* SearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DAC4A72CB503E00025E2A5 /* SearchData.swift */; };
+		79EBB8972CE32E9600754CCF /* SelectiveBlurEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBB8962CE32E9600754CCF /* SelectiveBlurEffect.swift */; };
+		79EBB8992CE349A600754CCF /* testselectiveblur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBB8982CE349A600754CCF /* testselectiveblur.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +111,8 @@
 		79C827492CA138750002541D /* ModeSelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSelectButton.swift; sourceTree = "<group>"; };
 		79C827512CA2565A0002541D /* GuessingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessingView.swift; sourceTree = "<group>"; };
 		79DAC4A72CB503E00025E2A5 /* SearchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchData.swift; sourceTree = "<group>"; };
+		79EBB8962CE32E9600754CCF /* SelectiveBlurEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectiveBlurEffect.swift; sourceTree = "<group>"; };
+		79EBB8982CE349A600754CCF /* testselectiveblur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testselectiveblur.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +288,8 @@
 			isa = PBXGroup;
 			children = (
 				79C827492CA138750002541D /* ModeSelectButton.swift */,
+				79EBB8962CE32E9600754CCF /* SelectiveBlurEffect.swift */,
+				79EBB8982CE349A600754CCF /* testselectiveblur.swift */,
 			);
 			path = UIShapes;
 			sourceTree = "<group>";
@@ -434,10 +440,12 @@
 			files = (
 				79BEF0992CDC383C00E02A77 /* InfiniteViewModel.swift in Sources */,
 				7911DB3C2CDF032A0035FE05 /* Game.swift in Sources */,
+				79EBB8992CE349A600754CCF /* testselectiveblur.swift in Sources */,
 				7911DB312CDE00D00035FE05 /* LocalDatabase+Persistent.swift in Sources */,
 				79BBB1EE2CD5B91F0004F635 /* GuessingViewModel.swift in Sources */,
 				7911DB332CDE01200035FE05 /* LocalDatabase.swift in Sources */,
 				7911DB442CDF05370035FE05 /* Cover.swift in Sources */,
+				79EBB8972CE32E9600754CCF /* SelectiveBlurEffect.swift in Sources */,
 				7911DB2F2CDDFBB10035FE05 /* LocalDatabase+Migrator.swift in Sources */,
 				799AB37B2C980D2600026580 /* ContentView.swift in Sources */,
 				79BEF09D2CDC39A500E02A77 /* GuessingHelpers.swift in Sources */,
