@@ -8,10 +8,6 @@
 /// with search and id arrays in swift data, i can possibly create 1 array? with formaat of [(id, name)] when looping through list of search data, when user clicks a search term we can retrieve the franchise with the id and give data in the results
 
 import Foundation
-import Supabase
-
-import Foundation
-import Supabase
 
 class GuessingHelpers {
     

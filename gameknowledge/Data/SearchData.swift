@@ -56,5 +56,3 @@ class SearchData: Identifiable{
         self.id = id
     }
 }
-
-

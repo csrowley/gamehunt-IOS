@@ -7,19 +7,12 @@
 
 import SwiftUI
 import SwiftData
+import ConfettiSwiftUI
+
+///currently the same franchise is bugged where it compares the last franchise to the most recent guess sometimes. check if problem with async  / concurrent
+///problem exists on infinite and daily
 ///
-///must reset game id  and info for every correct or game over guess (done?)
-/// must reset  blur count for every correct or game over (done?)
-/// increase score every win (done?)
-/// get rid of game rest for every day, keep it persist (done?)
-///
-/// doesnt refresh a new game for first launch?
-/// doesnt refresh a new game after a win?
-///
-///
-/// TASK: -  Show in guesses list if same franchsise or not
-/// current issue: figure out how to save if same franchise  persist
-/// idea: we can make userGuesses into the ids of the game and when we foreach loop we can just retrieve the names. if the id has the same franchise we print as such else we dont
+///TODO: create one time hint of a selective blur filter
 ///
 
 struct InfiniteView: View {
@@ -51,6 +44,7 @@ struct InfiniteView: View {
     
     @State private var sameFranchiseGuess: Bool = false
     @State private var displayGames: Game?
+    @State private var showConfetti: Int = 0
     
     
     
@@ -143,6 +137,7 @@ struct InfiniteView: View {
                                         viewModel.userGuessed.removeAll()
                                         viewModel.unqiueGuesses.removeAll()
                                         saveGuesses(true)
+                                        showConfetti += 1
                                         
                                         Task {
                                             if let data = searchData.first {
@@ -223,6 +218,7 @@ struct InfiniteView: View {
                         .background(Color.white)
                         .cornerRadius(10)
                         .padding(.horizontal)
+                        .confettiCannon(counter: $showConfetti, num:50, confettiSize: 10, rainHeight: 700)
                         
                         HStack{
                             Button {

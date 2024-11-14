@@ -20,9 +20,7 @@
 		7911DB402CDF04B90035FE05 /* franchises_rows.json in Resources */ = {isa = PBXBuildFile; fileRef = 7911DB3F2CDF04B90035FE05 /* franchises_rows.json */; };
 		7911DB422CDF04CD0035FE05 /* games_rows.json in Resources */ = {isa = PBXBuildFile; fileRef = 7911DB412CDF04CD0035FE05 /* games_rows.json */; };
 		7911DB442CDF05370035FE05 /* Cover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7911DB432CDF05370035FE05 /* Cover.swift */; };
-		795D5C832CDF26930067EA0D /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 795D5C822CDF26930067EA0D /* GRDB */; };
 		795D5C852CE05F150067EA0D /* Franchise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795D5C842CE05F150067EA0D /* Franchise.swift */; };
-		797798C42CD5CF73004A0872 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 797798C32CD5CF73004A0872 /* Supabase */; };
 		797798CA2CD7352F004A0872 /* names.json in Resources */ = {isa = PBXBuildFile; fileRef = 797798C92CD7352F004A0872 /* names.json */; };
 		797798CB2CD7352F004A0872 /* ids.json in Resources */ = {isa = PBXBuildFile; fileRef = 797798C82CD7352F004A0872 /* ids.json */; };
 		799AB3792C980D2600026580 /* gameknowledgeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AB3782C980D2600026580 /* gameknowledgeApp.swift */; };
@@ -35,16 +33,6 @@
 		799AB3982C980D2700026580 /* gameknowledgeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AB3972C980D2700026580 /* gameknowledgeUITestsLaunchTests.swift */; };
 		79BBB1E72CD481B80004F635 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BBB1E62CD481AD0004F635 /* SearchView.swift */; };
 		79BBB1EE2CD5B91F0004F635 /* GuessingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BBB1ED2CD5B91B0004F635 /* GuessingViewModel.swift */; };
-		79BBB1F12CD5C8420004F635 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 79BBB1F02CD5C8420004F635 /* Auth */; };
-		79BBB1F32CD5C8420004F635 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 79BBB1F22CD5C8420004F635 /* Functions */; };
-		79BBB1F52CD5C8420004F635 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 79BBB1F42CD5C8420004F635 /* PostgREST */; };
-		79BBB1F72CD5C8420004F635 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 79BBB1F62CD5C8420004F635 /* Realtime */; };
-		79BBB1F92CD5C8420004F635 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 79BBB1F82CD5C8420004F635 /* Storage */; };
-		79BBB1FC2CD5C91A0004F635 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 79BBB1FB2CD5C91A0004F635 /* Auth */; };
-		79BBB1FE2CD5C91A0004F635 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 79BBB1FD2CD5C91A0004F635 /* Functions */; };
-		79BBB2002CD5C91A0004F635 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 79BBB1FF2CD5C91A0004F635 /* PostgREST */; };
-		79BBB2022CD5C91A0004F635 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 79BBB2012CD5C91A0004F635 /* Realtime */; };
-		79BBB2042CD5C91A0004F635 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 79BBB2032CD5C91A0004F635 /* Storage */; };
 		79BEF0972CDC378500E02A77 /* InfiniteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BEF0962CDC378500E02A77 /* InfiniteView.swift */; };
 		79BEF0992CDC383C00E02A77 /* InfiniteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BEF0982CDC383C00E02A77 /* InfiniteViewModel.swift */; };
 		79BEF09D2CDC39A500E02A77 /* GuessingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BEF09C2CDC39A500E02A77 /* GuessingHelpers.swift */; };
@@ -53,6 +41,8 @@
 		79DAC4A82CB503EC0025E2A5 /* SearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DAC4A72CB503E00025E2A5 /* SearchData.swift */; };
 		79EBB8972CE32E9600754CCF /* SelectiveBlurEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBB8962CE32E9600754CCF /* SelectiveBlurEffect.swift */; };
 		79EBB8992CE349A600754CCF /* testselectiveblur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBB8982CE349A600754CCF /* testselectiveblur.swift */; };
+		79EBB8A02CE5CD1B00754CCF /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 79EBB89F2CE5CD1B00754CCF /* ConfettiSwiftUI */; };
+		79EBB8A32CE5D93F00754CCF /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 79EBB8A22CE5D93F00754CCF /* GRDB */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,18 +110,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				797798C42CD5CF73004A0872 /* Supabase in Frameworks */,
-				79BBB1F92CD5C8420004F635 /* Storage in Frameworks */,
-				79BBB1F52CD5C8420004F635 /* PostgREST in Frameworks */,
-				795D5C832CDF26930067EA0D /* GRDB in Frameworks */,
-				79BBB2042CD5C91A0004F635 /* Storage in Frameworks */,
-				79BBB1FE2CD5C91A0004F635 /* Functions in Frameworks */,
-				79BBB2022CD5C91A0004F635 /* Realtime in Frameworks */,
-				79BBB2002CD5C91A0004F635 /* PostgREST in Frameworks */,
-				79BBB1F32CD5C8420004F635 /* Functions in Frameworks */,
-				79BBB1FC2CD5C91A0004F635 /* Auth in Frameworks */,
-				79BBB1F12CD5C8420004F635 /* Auth in Frameworks */,
-				79BBB1F72CD5C8420004F635 /* Realtime in Frameworks */,
+				79EBB8A02CE5CD1B00754CCF /* ConfettiSwiftUI in Frameworks */,
+				79EBB8A32CE5D93F00754CCF /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,7 +338,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					799AB3742C980D2600026580 = {
 						CreatedOnToolsVersion = 15.4;
@@ -383,8 +363,8 @@
 			);
 			mainGroup = 799AB36C2C980D2600026580;
 			packageReferences = (
-				79BBB1FA2CD5C91A0004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */,
-				795D5C812CDF26930067EA0D /* XCRemoteSwiftPackageReference "GRDB" */,
+				79EBB89E2CE5CD1B00754CCF /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+				79EBB8A12CE5D93F00754CCF /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 			);
 			productRefGroup = 799AB3762C980D2600026580 /* Products */;
 			projectDirPath = "";
@@ -679,7 +659,6 @@
 		799AB39F2C980D2700026580 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -698,7 +677,6 @@
 		799AB3A02C980D2700026580 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -717,7 +695,6 @@
 		799AB3A22C980D2700026580 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -734,7 +711,6 @@
 		799AB3A32C980D2700026580 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -790,92 +766,34 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		795D5C812CDF26930067EA0D /* XCRemoteSwiftPackageReference "GRDB" */ = {
+		79EBB89E2CE5CD1B00754CCF /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/groue/GRDB.swift";
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+		79EBB8A12CE5D93F00754CCF /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift.git";
 			requirement = {
 				branch = master;
 				kind = branch;
 			};
 		};
-		79BBB1EF2CD5C2790004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/supabase-community/supabase-swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.1;
-			};
-		};
-		79BBB1FA2CD5C91A0004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/supabase-community/supabase-swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		795D5C822CDF26930067EA0D /* GRDB */ = {
+		79EBB89F2CE5CD1B00754CCF /* ConfettiSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 795D5C812CDF26930067EA0D /* XCRemoteSwiftPackageReference "GRDB" */;
+			package = 79EBB89E2CE5CD1B00754CCF /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
+		79EBB8A22CE5D93F00754CCF /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79EBB8A12CE5D93F00754CCF /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
-		};
-		797798C32CD5CF73004A0872 /* Supabase */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79BBB1FA2CD5C91A0004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Supabase;
-		};
-		79BBB1F02CD5C8420004F635 /* Auth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79BBB1EF2CD5C2790004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Auth;
-		};
-		79BBB1F22CD5C8420004F635 /* Functions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79BBB1EF2CD5C2790004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Functions;
-		};
-		79BBB1F42CD5C8420004F635 /* PostgREST */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79BBB1EF2CD5C2790004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = PostgREST;
-		};
-		79BBB1F62CD5C8420004F635 /* Realtime */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79BBB1EF2CD5C2790004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Realtime;
-		};
-		79BBB1F82CD5C8420004F635 /* Storage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79BBB1EF2CD5C2790004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Storage;
-		};
-		79BBB1FB2CD5C91A0004F635 /* Auth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79BBB1FA2CD5C91A0004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Auth;
-		};
-		79BBB1FD2CD5C91A0004F635 /* Functions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79BBB1FA2CD5C91A0004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Functions;
-		};
-		79BBB1FF2CD5C91A0004F635 /* PostgREST */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79BBB1FA2CD5C91A0004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = PostgREST;
-		};
-		79BBB2012CD5C91A0004F635 /* Realtime */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79BBB1FA2CD5C91A0004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Realtime;
-		};
-		79BBB2032CD5C91A0004F635 /* Storage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79BBB1FA2CD5C91A0004F635 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Storage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

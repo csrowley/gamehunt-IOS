@@ -26,6 +26,7 @@ struct GuessingView: View {
     @AppStorage("dailyStreak") private var dailyStreak: Int = 0
     
     @State private var sameFranchiseGuess: Bool = false
+    @State private var showConfetti: Int = 0
 
     
     init() {
@@ -96,6 +97,7 @@ struct GuessingView: View {
                                         isWinner.toggle()
                                         blurCount = 0
                                         dailyStreak += 1
+                                        showConfetti += 1
                                     } else {
                                         // Decrease lives and check for game over
                                         if numLivesLeft > 1 {
@@ -129,6 +131,8 @@ struct GuessingView: View {
                         .background(Color.white)
                         .cornerRadius(10)
                         .padding(.horizontal)
+                        .confettiCannon(counter: $showConfetti, num:50, confettiSize: 10, rainHeight: 700, repetitions: 1)
+
                         
                         Button {
                             viewModel.toggleSheetView.toggle()
