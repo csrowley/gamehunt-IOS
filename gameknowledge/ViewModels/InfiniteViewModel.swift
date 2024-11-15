@@ -24,6 +24,7 @@ extension InfiniteView{
         var score: Int = 0
         
         let gameHelper = GuessingHelpers()
+        let imageHelper = ImageModifers()
         
         
         

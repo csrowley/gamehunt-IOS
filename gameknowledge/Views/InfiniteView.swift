@@ -45,10 +45,11 @@ struct InfiniteView: View {
     @State private var sameFranchiseGuess: Bool = false
     @State private var displayGames: Game?
     @State private var showConfetti: Int = 0
+    @State private var showSkipAlert: Bool = false
     
     
     
-    @State private var prevAnswer = "Buckshot Roulette"
+    @AppStorage("prevAnswer") private var prevAnswer = "Buckshot Roulette"
     
     init() {
         UISearchBar.appearance().overrideUserInterfaceStyle = .dark
@@ -125,8 +126,6 @@ struct InfiniteView: View {
                                 viewModel.submitFlag.toggle()
                                 prevAnswer = infiniteGuess
                                 
-                                
-                                
                                 if numLivesLeft > 0 && !viewModel.unqiueGuesses.contains(viewModel.searchID) && !viewModel.searchText.isEmpty {
                                     if viewModel.searchText == infiniteGuess {
                                         // Show winner screen and reset for a new game
@@ -160,18 +159,16 @@ struct InfiniteView: View {
                                             
                                             Task {
                                                 let isSameFranchise = await checkFranchiseMatch()
-                                                await MainActor.run {
-                                                    viewModel.numLives -= 1
-                                                    numLivesLeft -= 1
-                                                    viewModel.unqiueGuesses.insert(viewModel.searchID)
-                                                    print("Is Same Franchhise Guess: \(isSameFranchise)")
-
-                                                    viewModel.userGuessed.append(GameGuess(name: viewModel.searchText, id: viewModel.searchID, sameFranchise: isSameFranchise))
-                                                    
-                                                    
-                                                    saveGuesses(false)
-                                                    blurCountInfinite = max(3, blurCountInfinite - 2) //revert
-                                                }
+                                                viewModel.numLives -= 1
+                                                numLivesLeft -= 1
+                                                viewModel.unqiueGuesses.insert(viewModel.searchID)
+                                                print("Is Same Franchhise Guess: \(isSameFranchise)")
+                                                
+                                                viewModel.userGuessed.append(GameGuess(name: viewModel.searchText, id: viewModel.searchID, sameFranchise: isSameFranchise))
+                                                
+                                                
+                                                saveGuesses(false)
+                                                blurCountInfinite = max(3, blurCountInfinite - 2) //revert
                                             }
                                         } else {
                                             showGameOverAlert = true // Trigger the game-over alert
@@ -186,7 +183,7 @@ struct InfiniteView: View {
                                             
                                             isHintUsed = false
                                             showHintText = false
-
+                                            
                                             
                                             Task {
                                                 if let data = searchData.first {
@@ -218,59 +215,113 @@ struct InfiniteView: View {
                         .background(Color.white)
                         .cornerRadius(10)
                         .padding(.horizontal)
+                        .padding(.bottom)
                         .confettiCannon(counter: $showConfetti, num:50, confettiSize: 10, rainHeight: 700)
                         
-                        HStack{
-                            Button {
-                                viewModel.toggleSheetView.toggle()
-                            } label: {
-                                HStack {
-                                    Image(systemName: "magnifyingglass")
-                                    Text("Search")
-                                        .font(Font.custom("Jersey10-Regular", size: 25))
+                        HStack(spacing: 12) {  // Added consistent spacing between buttons
+                            Group {  // Group helps apply same modifiers to all buttons
+                                Button {
+                                    viewModel.toggleSheetView.toggle()
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "magnifyingglass")
+                                        Text("Search")
+                                            .font(Font.custom("Jersey10-Regular", size: 20))
+                                    }
+                                    .frame(maxWidth: .infinity)  // Makes button expand to fill available space
+                                    .padding()
+                                    .background(Color.orange)
+                                    .foregroundStyle(Color.white)
+                                    .cornerRadius(10)
                                 }
-                                .padding()
-                                .background(Color.orange)
-                                .foregroundStyle(Color.white)
-                                .cornerRadius(10)
-                                .padding(.horizontal)
-                            }
-                            
-                            Button {
-                                if !isHintUsed{
-                                    showHintAlert.toggle()
-                                }
-                            } label : {
-                                HStack {
-                                    Text("One Time Hint")
-                                        .font(Font.custom("Jersey10-Regular", size: 25))
-                                        .foregroundStyle(.white)
-                                    Image(systemName: "questionmark.app.fill")
-                                        .foregroundStyle(.orange)
-                                        .font(.system(size: 25))
-                                        .symbolRenderingMode(.multicolor)
-                                }
-                                .padding()
-                                .background(Color.gray.opacity(0.2))
                                 
-                                .cornerRadius(10)
+                                Button {
+                                    if !isHintUsed {
+                                        showHintAlert.toggle()
+                                    }
+                                } label: {
+                                    HStack {
+                                        Text("Hint")
+                                            .font(Font.custom("Jersey10-Regular", size: 20))
+                                            .foregroundStyle(.white)
+                                        Image(systemName: "questionmark.app.fill")
+                                            .foregroundStyle(.orange)
+                                            .font(.system(size: 25))
+                                            .symbolRenderingMode(.multicolor)
+                                    }
+                                    .frame(maxWidth: .infinity)  // Makes button expand to fill available space
+                                    .padding()
+                                    .background(Color.gray.opacity(0.2))
+                                    .cornerRadius(10)
+                                }
                                 
+                                Button {
+                                    showSkipAlert.toggle()
+                                } label: {
+                                    HStack {
+                                        Text("Skip")
+                                            .font(Font.custom("Jersey10-Regular", size: 20))
+                                            .foregroundStyle(.white)
+                                        Image(systemName: "arrow.forward")
+                                            .font(.system(size: 15))
+                                    }
+                                    .frame(maxWidth: .infinity)  // Makes button expand to fill available space
+                                    .padding()
+                                    .background(Color.red)
+                                    .cornerRadius(10)  // Made consistent with other buttons
+                                    .foregroundStyle(.white)
+                                }
                             }
                         }
-                    }
-                    .alert("Hint", isPresented: $showHintAlert){
-                        Button("Yes"){
-                            isHintUsed.toggle()
-                            showHintText.toggle()
+                        .padding(.horizontal)  // Moved padding to the HStack level
+                        
+                        // Rest of the code remains the same
+                        .alert("Hint", isPresented: $showHintAlert) {
+                            Button("Yes") {
+                                isHintUsed.toggle()
+                                showHintText.toggle()
+                            }
+                            Button("No", role: .cancel) {}
+                        } message: {
+                            Text("Use one time hint? Only one use per run.")
                         }
-                        Button("No", role: .cancel){}
-                    } message: {
-                        Text("Use one time hint? Only one use per run.")
-                    }
-                    .sheet(isPresented: $viewModel.toggleSheetView) {
-                        SearchView(selectedText: $viewModel.searchText, selectedID: $viewModel.searchID)
-                            .presentationDetents([.height(200), .medium, .large])
-                            .presentationDragIndicator(.automatic)
+                        .alert("Skip?", isPresented: $showSkipAlert) {
+                            Button("Yes") {
+                                prevAnswer = infiniteGuess
+                                showGameOverAlert = true // Trigger the game-over alert
+                                infiniteScore = 0
+                                numLivesLeft = 5
+                                blurCountInfinite = 12 // Reset blur count
+                                viewModel.userGuessed.removeAll()
+                                viewModel.unqiueGuesses.removeAll()
+                                saveGuesses(true)
+                                
+                                isHintUsed = false
+                                showHintText = false
+                                
+                                Task {
+                                    if let data = searchData.first {
+                                        await fetchNewGuess(data)
+                                    } else {
+                                        print("Error! No game IDs available.")
+                                    }
+                                    
+                                    // Reset states for the next round
+                                    viewModel.searchText = "" // Clear search text
+                                    viewModel.submitFlag = false // Reset submit flag
+                                    isWinnerInfinite = false // Reset winner flag
+                                }
+                            }
+                            Button("No", role: .cancel) {}
+                        } message: {
+                            Text("Skipping will reset your score!")
+                        }
+                        .sheet(isPresented: $viewModel.toggleSheetView) {
+                            SearchView(selectedText: $viewModel.searchText, selectedID: $viewModel.searchID)
+                                .presentationDetents([.height(200), .medium, .large])
+                                .presentationDragIndicator(.automatic)
+                        }
+                        
                     }
                     
                     List {
@@ -332,12 +383,16 @@ struct InfiniteView: View {
                         
                         if let franchiseID = Int64(currGameInfo?.franchise ?? ""){
                             let franchise = try await LocalDatabase.shared.getFranchise(id: Int64(franchiseID))
-                            infiniteGuessFranchise = franchise?.name ?? "none"
+                            infiniteGuessFranchise = franchise?.name ?? ""
                             print(infiniteGuessFranchise)
+                        }
+                        else{
+                            infiniteGuessFranchise = "No Franchise"
                         }
                         
                         infiniteGuessCoverURL = currGameCoverURL?.cover_url ?? "none"
                         infiniteGuess = currGameInfo?.name ?? "none"
+                        prevAnswer = infiniteGuess
                         
                         print(infiniteGuess)
                         print(infiniteGuessCoverURL)
@@ -392,12 +447,15 @@ struct InfiniteView: View {
                 
                 if let franchiseID = Int64(currGameInfo?.franchise ?? ""){
                     let franchise = try await LocalDatabase.shared.getFranchise(id: Int64(franchiseID))
-                    infiniteGuessFranchise = franchise?.name ?? "none"
+                    infiniteGuessFranchise = franchise?.name ?? ""
                     print(infiniteGuessFranchise)
                 }
+                
                 else{
+                    infiniteGuessFranchise = "No Franchise"
                     print("error obtaining franchise")
                 }
+                
                 print(currGameInfo!.franchise!)
                 
                 // Assign values after async operations are complete

@@ -2,70 +2,85 @@ import SwiftUI
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
-struct testSelectiveBlur: View {
-    @State private var blurredUIImage: UIImage?
+// Selective Blur View Modifier
+struct SelectiveBlurModifier: ViewModifier {
+    let radius: Float
+    let imageName: String
+    
+    func body(content: Content) -> some View {
+        if let uiImage = applySelectiveBlur(named: imageName) {
+            Image(uiImage: uiImage)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        } else {
+            content  // Show original content if image fails to load
+        }
+    }
+    
+    // Function to apply the selective blur
+    private func applySelectiveBlur(named imageName: String) -> UIImage? {
+        guard let uiImage = UIImage(named: imageName),
+              let ciImage = CIImage(image: uiImage) else {
+            return nil  // Return nil if loading fails
+        }
+        
+        let h = ciImage.extent.size.height
+        
+        // Create top gradient
+        let topGradient = CIFilter.linearGradient()
+        topGradient.point0 = CGPoint(x: 0, y: 0.7 * h)
+        topGradient.color0 = CIColor(red: 0, green: 1, blue: 0, alpha: 1)
+        topGradient.point1 = CGPoint(x: 0, y: 0.65 * h)
+        topGradient.color1 = CIColor(red: 0, green: 1, blue: 0, alpha: 0)
+        
+        // Create bottom gradient
+        let bottomGradient = CIFilter.linearGradient()
+        bottomGradient.point0 = CGPoint(x: 0, y: 0.45 * h)
+        bottomGradient.color0 = CIColor(red: 0, green: 1, blue: 0, alpha: 1)
+        bottomGradient.point1 = CGPoint(x: 0, y: 0.5 * h)
+        bottomGradient.color1 = CIColor(red: 0, green: 1, blue: 0, alpha: 0)
+        
+        // Combine gradients
+        let gradientMask = CIFilter.additionCompositing()
+        gradientMask.inputImage = topGradient.outputImage
+        gradientMask.backgroundImage = bottomGradient.outputImage
+        
+        // Create blur effect
+        let blur = CIFilter.gaussianBlur()
+        blur.inputImage = ciImage
+        blur.radius = radius
+        
+        // Blend original and blurred image using mask
+        let blend = CIFilter.blendWithMask()
+        blend.inputImage = blur.outputImage
+        blend.backgroundImage = ciImage
+        blend.maskImage = gradientMask.outputImage
+        
+        guard let outputImage = blend.outputImage,
+              let cgImage = CIContext().createCGImage(outputImage, from: outputImage.extent)
+        else { return uiImage }
+        
+        return UIImage(cgImage: cgImage)
+    }
+}
 
+// Extend View to easily apply the modifier
+extension View {
+    func selectiveBlur(imageName: String, radius: Float) -> some View {
+        self.modifier(SelectiveBlurModifier(radius: radius, imageName: imageName))
+    }
+}
+
+// Test View
+struct TestSelectiveBlur: View {
     var body: some View {
-        VStack {
-            if let image = blurredUIImage {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-            } else {
-                Text("Loading image...")
-            }
-        }
-        .onAppear {
-            applyBlurEffectToAssetImage()
-        }
+        Image("400k 1")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .selectiveBlur(imageName: "400k 1", radius: 3)  // Apply the selective blur modifier
     }
-
-    // Helper function to convert CIImage to UIImage
-    func convertCIImageToUIImage(_ ciImage: CIImage) -> UIImage? {
-        let context = CIContext()
-        if let cgImage = context.createCGImage(ciImage, from: ciImage.extent) {
-            return UIImage(cgImage: cgImage)
-        }
-        return nil
-    }
-
-    // Apply blur effect to the image from xcassets
-    func applyBlurEffectToAssetImage() {
-        guard let inputImage = UIImage(named: "400k 1"),
-              let ciInputImage = CIImage(image: inputImage) else {
-            print("Image not found in assets.")
-            return
-        }
-
-        // Apply your blur function
-        let blurredCIImage = blurImage(ciInputImage)
-        
-        // Convert the blurred CIImage to UIImage
-        if let blurredUIImage = convertCIImageToUIImage(blurredCIImage) {
-            self.blurredUIImage = blurredUIImage
-        }
-    }
-
-    // Your blur function
-    func blurImage(_ input: CIImage) -> CIImage {
-        let filter = CIFilter.maskedVariableBlur()
-        filter.inputImage = input
-        
-        let mask = CIFilter.smoothLinearGradient()
-        mask.color0 = CIColor.white
-        mask.color1 = CIColor.black
-        mask.point0 = CGPoint(x: 0, y: 0)
-        mask.point1 = CGPoint(x: 0, y: input.extent.height)
-        
-        filter.mask = mask.outputImage
-        filter.radius = 25
-        
-        return filter.outputImage!
-    }
-    
-    
 }
 
 #Preview {
-    testSelectiveBlur()
+    TestSelectiveBlur()
 }

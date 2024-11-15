@@ -77,7 +77,6 @@ class GuessingHelpers {
             
             return Array(zip(names, ids))
                 .map{SearchData(name: $0.0, id: $0.1)}
-                .sorted {$0.name < $1.name}
             
         } catch {
             print("error returning tuple array of  (name, id)", error)

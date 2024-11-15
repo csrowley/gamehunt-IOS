@@ -224,6 +224,9 @@ struct GuessingView: View {
                             dailyGuessFranchise = franchise?.name ?? "none"
                             print(dailyGuessFranchise)
                         }
+                        else{
+                            dailyGuessFranchise = ""
+                        }
                         
                         dailyGuessCoverURL = currGameCoverURL?.cover_url ?? "none"
                         dailyGuess = currGameInfo?.name ?? "none"
@@ -254,6 +257,9 @@ struct GuessingView: View {
                             let franchise = try await LocalDatabase.shared.getFranchise(id: Int64(franchiseID))
                             dailyGuessFranchise = franchise?.name ?? "none"
                             print(dailyGuessFranchise)
+                        }
+                        else{
+                            dailyGuessFranchise = ""
                         }
                         
                         dailyGuessCoverURL = currGameCoverURL?.cover_url ?? ""

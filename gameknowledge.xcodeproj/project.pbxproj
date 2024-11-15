@@ -31,6 +31,7 @@
 		799AB38C2C980D2700026580 /* gameknowledgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AB38B2C980D2700026580 /* gameknowledgeTests.swift */; };
 		799AB3962C980D2700026580 /* gameknowledgeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AB3952C980D2700026580 /* gameknowledgeUITests.swift */; };
 		799AB3982C980D2700026580 /* gameknowledgeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AB3972C980D2700026580 /* gameknowledgeUITestsLaunchTests.swift */; };
+		799E81EE2CE6FD4A000A2662 /* ImageModifers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799E81ED2CE6FD4A000A2662 /* ImageModifers.swift */; };
 		79BBB1E72CD481B80004F635 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BBB1E62CD481AD0004F635 /* SearchView.swift */; };
 		79BBB1EE2CD5B91F0004F635 /* GuessingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BBB1ED2CD5B91B0004F635 /* GuessingViewModel.swift */; };
 		79BEF0972CDC378500E02A77 /* InfiniteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BEF0962CDC378500E02A77 /* InfiniteView.swift */; };
@@ -93,6 +94,7 @@
 		799AB3912C980D2700026580 /* gameknowledgeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gameknowledgeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		799AB3952C980D2700026580 /* gameknowledgeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gameknowledgeUITests.swift; sourceTree = "<group>"; };
 		799AB3972C980D2700026580 /* gameknowledgeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gameknowledgeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		799E81ED2CE6FD4A000A2662 /* ImageModifers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModifers.swift; sourceTree = "<group>"; };
 		79BBB1E62CD481AD0004F635 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		79BBB1ED2CD5B91B0004F635 /* GuessingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessingViewModel.swift; sourceTree = "<group>"; };
 		79BEF0962CDC378500E02A77 /* InfiniteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteView.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				79BBB1ED2CD5B91B0004F635 /* GuessingViewModel.swift */,
 				79BEF0982CDC383C00E02A77 /* InfiniteViewModel.swift */,
 				79BEF09C2CDC39A500E02A77 /* GuessingHelpers.swift */,
+				799E81ED2CE6FD4A000A2662 /* ImageModifers.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				799AB37D2C980D2600026580 /* Item.swift in Sources */,
 				79DAC4A82CB503EC0025E2A5 /* SearchData.swift in Sources */,
 				79C8274A2CA138750002541D /* ModeSelectButton.swift in Sources */,
+				799E81EE2CE6FD4A000A2662 /* ImageModifers.swift in Sources */,
 				795D5C852CE05F150067EA0D /* Franchise.swift in Sources */,
 				79BBB1E72CD481B80004F635 /* SearchView.swift in Sources */,
 				79BEF0972CDC378500E02A77 /* InfiniteView.swift in Sources */,
