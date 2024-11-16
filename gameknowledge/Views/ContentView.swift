@@ -42,7 +42,7 @@ struct ContentView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("GameHunt")
+                    Text("Cover Quest")
                         .font(Font.custom("Jersey10-Regular", size: 50))
                         .foregroundStyle(Color.white)
                 }

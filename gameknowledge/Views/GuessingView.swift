@@ -131,7 +131,7 @@ struct GuessingView: View {
                         .background(Color.white)
                         .cornerRadius(10)
                         .padding(.horizontal)
-                        .confettiCannon(counter: $showConfetti, num:50, confettiSize: 10, rainHeight: 700, repetitions: 1)
+                        .confettiCannon(counter: $showConfetti, num:100, confettiSize: 8, rainHeight: 1000, openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360), repetitions: 1)
 
                         
                         Button {

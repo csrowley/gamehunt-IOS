@@ -9,12 +9,6 @@ import SwiftUI
 import SwiftData
 import ConfettiSwiftUI
 
-///currently the same franchise is bugged where it compares the last franchise to the most recent guess sometimes. check if problem with async  / concurrent
-///problem exists on infinite and daily
-///
-///TODO: create one time hint of a selective blur filter
-///
-
 struct InfiniteView: View {
     let darkGrey = UIColor(red: (59/225), green: (54/225), blue: (54/225), alpha: 1)
     
