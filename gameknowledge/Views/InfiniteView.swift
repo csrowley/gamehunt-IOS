@@ -98,9 +98,16 @@ struct InfiniteView: View {
                                 Text("Hint:")
                                     .font(Font.custom("Jersey10-Regular", size: 30))
                                     .foregroundColor(.white)
-                                Text("\(infiniteGuessFranchise)") // insert franchise hint
-                                    .font(Font.custom("Jersey10-Regular", size: 30))
-                                    .foregroundColor(.orange)
+                                if !infiniteGuessFranchise.isEmpty {
+                                    Text("\(infiniteGuessFranchise)") // insert franchise hint
+                                        .font(Font.custom("Jersey10-Regular", size: 30))
+                                        .foregroundColor(.orange)
+                                }
+                                else {
+                                    Text("Release Date: \(hintText)") // Release Date
+                                        .font(Font.custom("Jersey10-Regular", size: 30))
+                                        .foregroundColor(.orange)
+                                }
                                 
                             }
                     }
@@ -381,7 +388,8 @@ struct InfiniteView: View {
                             print(infiniteGuessFranchise)
                         }
                         else{
-                            infiniteGuessFranchise = "No Franchise"
+                            infiniteGuessFranchise = ""
+                            hintText = currGameInfo?.release_date ?? ""
                         }
                         
                         infiniteGuessCoverURL = currGameCoverURL?.cover_url ?? "none"
@@ -446,7 +454,8 @@ struct InfiniteView: View {
                 }
                 
                 else{
-                    infiniteGuessFranchise = "No Franchise"
+                    infiniteGuessFranchise = ""
+                    hintText = currGameInfo?.release_date ?? ""
                     print("error obtaining franchise")
                 }
                 
