@@ -1,6 +1,16 @@
-# Cover Quest
-
-An iOS gaming app that challenges players to identify video game covers through progressive deblurring. Test your gaming knowledge in this engaging guessing game!
+<div align="center">
+  <!-- App Icon -->  
+  <!-- App Name -->
+  <h1>Cover Quest</h1>
+  
+  <!-- App Description -->
+  <p>Test your gaming knowledge by guessing blurred video game covers</p>
+  
+  <!-- App Store Badge -->
+  <a href="https://apps.apple.com/us/app/cover-quest/id6738270534">
+    <img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;">
+  </a>
+</div>
 
 ## 📱 In-Game
 <div aligh="center">
