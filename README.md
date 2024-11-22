@@ -23,7 +23,7 @@
 - One new video game cover to guess each day
 - 5 lives per challenge
 - Cover gradually becomes clearer with each incorrect guess
-- 
+
 ### Infinite Mode
 - Thousands of  video game covers to guess
 - 5 lives per round
