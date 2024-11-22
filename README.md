@@ -3,14 +3,11 @@
 An iOS gaming app that challenges players to identify video game covers through progressive deblurring. Test your gaming knowledge in this engaging guessing game!
 
 ## 📱 In-Game
-<!-- Using direct image URL -->
-<img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/homescreen.png" width="200" alt="Home Screen">
-
-<!-- Using image hosting service URL (like imgur) -->
-<img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/infinitemode.png" width="200" alt="Infinite Mode">
-
-<!-- Using GitHub image URL -->
-<img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/winscreen.png" width="200" alt="Daily Win">
+<div aligh="center">
+  <img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/homescreen.png" width="200" alt="Home Screen">
+  <img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/infinitemode.png" width="200" alt="Infinite Mode">
+  <img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/winscreen.png" width="200" alt="Daily Win">
+</div>
 
 ### Daily Challenge
 - One new video game cover to guess each day
