@@ -7,7 +7,7 @@
   <p>Test your gaming knowledge by guessing blurred video game covers</p>
   
   <!-- App Store Badge -->
-  <a href="https://apps.apple.com/us/app/cover-quest/id6738270534">
+  <a href="https://apps.apple.com/us/app/cover-quest/id6738270534?platform=iphone">
     <img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;">
   </a>
 </div>
