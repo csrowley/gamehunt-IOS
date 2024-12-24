@@ -17,6 +17,8 @@
   <img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/homescreen.png" width="200" alt="Home Screen">
   <img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/infinitemode.png" width="200" alt="Infinite Mode">
   <img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/winscreen.png" width="200" alt="Daily Win">
+  <img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/infinitemode.png" width="200" alt="Infinite Mode">
+  <img src="https://github.com/csrowley/gamehunt-IOS/blob/main/images/winscreen.png" width="200" alt="Daily Win">
 </div>
 
 ### Daily Challenge
